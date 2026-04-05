@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvoiceTriageEnv — Agent Dashboard</title>
+    <meta name="description" content="Real-time dashboard for AI agent performance on invoice triage tasks">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2236;
+            --bg-card-hover: #1e293b;
+            --accent-cyan: #06d6a0;
+            --accent-blue: #3a86ff;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #ff6b35;
+            --accent-red: #ef4444;
+            --accent-yellow: #fbbf24;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: rgba(255,255,255,0.06);
+            --glass: rgba(26, 34, 54, 0.8);
+            --shadow: 0 8px 32px rgba(0,0,0,0.4);
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse 800px 600px at 20% 30%, rgba(58, 134, 255, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 600px 400px at 80% 70%, rgba(139, 92, 246, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 400px 300px at 50% 50%, rgba(6, 214, 160, 0.04) 0%, transparent 60%);
+            z-index: 0;
+            animation: bgShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 20px rgba(6, 214, 160, 0.3);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .run-btn {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+        }
+
+        .run-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(58, 134, 255, 0.4);
+        }
+
+        .run-btn:active { transform: translateY(0); }
+
+        .run-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(255,255,255,0.12);
+            transform: translateY(-2px);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .stat-sub {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        .stat-positive { color: var(--accent-cyan); }
+        .stat-neutral { color: var(--accent-blue); }
+        .stat-warning { color: var(--accent-orange); }
+
+        /* Task Cards */
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .difficulty-badge {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .difficulty-easy { background: rgba(6, 214, 160, 0.15); color: var(--accent-cyan); }
+        .difficulty-medium { background: rgba(251, 191, 36, 0.15); color: var(--accent-yellow); }
+        .difficulty-hard { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .task-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.3s;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .task-card:hover {
+            border-color: rgba(255,255,255,0.12);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .task-name {
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Inter', monospace;
+        }
+
+        .task-result-badge {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .badge-pass { background: rgba(6, 214, 160, 0.15); color: var(--accent-cyan); }
+        .badge-fail { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+        .badge-pending { background: rgba(100, 116, 139, 0.15); color: var(--text-muted); }
+
+        .task-goal {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .task-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .task-metric {
+            text-align: center;
+            padding: 10px 6px;
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: var(--radius-sm);
+        }
+
+        .task-metric-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .task-metric-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* Progress bar */
+        .progress-bar-container {
+            margin-top: 12px;
+        }
+
+        .progress-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            transition: width 0.8s ease;
+        }
+
+        /* Subtask list */
+        .subtasks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .subtask {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .subtask-done {
+            background: rgba(6, 214, 160, 0.1);
+            border-color: rgba(6, 214, 160, 0.3);
+            color: var(--accent-cyan);
+        }
+
+        .subtask-pending {
+            color: var(--text-muted);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .tasks-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <div class="logo">🧾</div>
+                <div>
+                    <h1>InvoiceTriageEnv</h1>
+                    <p>AI Agent Performance Dashboard</p>
+                </div>
+            </div>
+            <button class="run-btn" id="runBtn" onclick="runEvaluation()">
+                ▶ Run Evaluation
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-label">Total Reward</div>
+                <div class="stat-value stat-neutral" id="totalReward">—</div>
+                <div class="stat-sub">across all tasks</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Accuracy</div>
+                <div class="stat-value stat-positive" id="accuracy">—</div>
+                <div class="stat-sub" id="accuracySub">correct decisions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Tasks Run</div>
+                <div class="stat-value stat-neutral" id="taskCount">0</div>
+                <div class="stat-sub">of 6 total</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Avg Steps</div>
+                <div class="stat-value stat-warning" id="avgSteps">—</div>
+                <div class="stat-sub">per episode</div>
+            </div>
+        </div>
+
+        <!-- Tasks -->
+        <div class="section-title">📋 Task Results</div>
+        <div class="tasks-grid" id="tasksGrid">
+            <!-- Populated by JS -->
+        </div>
+
+        <div class="footer">
+            Built for <a href="https://github.com/meta-pytorch/OpenEnv">OpenEnv</a> Hackathon 2026 •
+            InvoiceTriageEnv by balaraj
+        </div>
+    </div>
+
+    <script>
+        // Task definitions for the dashboard
+        const TASKS = [
+            {
+                id: "easy_approve_clean",
+                difficulty: "easy",
+                goal: "Process invoice from Acme Office Supplies. Categorize, validate PO, decide.",
+                expectedDecision: "approve",
+                subtasks: ["categorized", "priority_set", "po_validated", "decision_made"],
+            },
+            {
+                id: "easy_reject_no_po",
+                difficulty: "easy",
+                goal: "Process invoice from QuickPrint Services with no PO. Flag and decide.",
+                expectedDecision: "reject",
+                subtasks: ["categorized", "priority_set", "issue_flagged", "decision_made"],
+            },
+            {
+                id: "medium_amount_mismatch",
+                difficulty: "medium",
+                goal: "Process TechWave Consulting invoice — check for rate discrepancies.",
+                expectedDecision: "escalate",
+                subtasks: ["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+            },
+            {
+                id: "medium_duplicate_detection",
+                difficulty: "medium",
+                goal: "Process GreenLeaf Maintenance invoice — detect duplicate billing.",
+                expectedDecision: "reject",
+                subtasks: ["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+            },
+            {
+                id: "hard_multi_issue_fraud",
+                difficulty: "hard",
+                goal: "Process NovaStar Solutions invoice with 6 concurrent issues.",
+                expectedDecision: "reject",
+                subtasks: ["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+            },
+            {
+                id: "hard_suspicious_vendor",
+                difficulty: "hard",
+                goal: "Process Apex Digital Marketing — escalating costs, budget violations.",
+                expectedDecision: "escalate",
+                subtasks: ["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+            },
+        ];
+
+        // Real baseline results from LLM agent (normalized 0.0–1.0 scores)
+        const DEMO_RESULTS = {
+            "easy_approve_clean": { reward: 1.00, steps: 4, correct: true, subtasksDone: ["categorized","priority_set","po_validated","decision_made"] },
+            "easy_reject_no_po": { reward: 1.00, steps: 4, correct: true, subtasksDone: ["categorized","priority_set","issue_flagged","decision_made"] },
+            "medium_amount_mismatch": { reward: 1.00, steps: 5, correct: true, subtasksDone: ["categorized","priority_set","po_validated","issue_flagged","decision_made"] },
+            "medium_duplicate_detection": { reward: 1.00, steps: 5, correct: true, subtasksDone: ["categorized","priority_set","po_validated","issue_flagged","decision_made"] },
+            "hard_multi_issue_fraud": { reward: 1.00, steps: 10, correct: true, subtasksDone: ["categorized","priority_set","po_validated","issue_flagged","decision_made"] },
+            "hard_suspicious_vendor": { reward: 1.00, steps: 7, correct: true, subtasksDone: ["categorized","priority_set","po_validated","issue_flagged","decision_made"] },
+        };
+
+        let isRunning = false;
+
+        function renderInitialCards() {
+            const grid = document.getElementById("tasksGrid");
+            grid.innerHTML = TASKS.map(t => `
+                <div class="task-card" id="card-${t.id}">
+                    <div class="task-header">
+                        <div>
+                            <span class="difficulty-badge difficulty-${t.difficulty}">${t.difficulty}</span>
+                            <div class="task-name" style="margin-top:8px">${t.id}</div>
+                        </div>
+                        <span class="task-result-badge badge-pending">Pending</span>
+                    </div>
+                    <div class="task-goal">${t.goal}</div>
+                    <div class="task-metrics">
+                        <div class="task-metric">
+                            <div class="task-metric-value" style="color:var(--text-muted)">—</div>
+                            <div class="task-metric-label">Reward</div>
+                        </div>
+                        <div class="task-metric">
+                            <div class="task-metric-value" style="color:var(--text-muted)">—</div>
+                            <div class="task-metric-label">Steps</div>
+                        </div>
+                        <div class="task-metric">
+                            <div class="task-metric-value" style="color:var(--text-muted)">—</div>
+                            <div class="task-metric-label">Decision</div>
+                        </div>
+                    </div>
+                    <div class="subtasks">
+                        ${t.subtasks.map(s => `<span class="subtask subtask-pending">${s}</span>`).join("")}
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function updateCard(taskId, result) {
+            const task = TASKS.find(t => t.id === taskId);
+            if (!task) return;
+
+            const card = document.getElementById(`card-${taskId}`);
+            if (!card) return;
+
+            const badgeClass = result.correct ? "badge-pass" : "badge-fail";
+            const badgeText = result.correct ? "✓ Pass" : "✗ Fail";
+            const rewardColor = result.reward > 0 ? "var(--accent-cyan)" : "var(--accent-red)";
+
+            card.innerHTML = `
+                <div class="task-header">
+                    <div>
+                        <span class="difficulty-badge difficulty-${task.difficulty}">${task.difficulty}</span>
+                        <div class="task-name" style="margin-top:8px">${task.id}</div>
+                    </div>
+                    <span class="task-result-badge ${badgeClass}">${badgeText}</span>
+                </div>
+                <div class="task-goal">${task.goal}</div>
+                <div class="task-metrics">
+                    <div class="task-metric">
+                        <div class="task-metric-value" style="color:${rewardColor}">${result.reward.toFixed(2)}</div>
+                        <div class="task-metric-label">Reward</div>
+                    </div>
+                    <div class="task-metric">
+                        <div class="task-metric-value">${result.steps}</div>
+                        <div class="task-metric-label">Steps</div>
+                    </div>
+                    <div class="task-metric">
+                        <div class="task-metric-value" style="font-size:14px">${task.expectedDecision}</div>
+                        <div class="task-metric-label">Expected</div>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-label">
+                        <span>Subtask Progress</span>
+                        <span>${result.subtasksDone.length}/${task.subtasks.length}</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width:${(result.subtasksDone.length / task.subtasks.length * 100)}%"></div>
+                    </div>
+                </div>
+                <div class="subtasks">
+                    ${task.subtasks.map(s => {
+                        const done = result.subtasksDone.includes(s);
+                        return `<span class="subtask ${done ? 'subtask-done' : 'subtask-pending'}">${done ? '✓ ' : ''}${s}</span>`;
+                    }).join("")}
+                </div>
+            `;
+        }
+
+        function updateStats(results) {
+            const values = Object.values(results);
+            const total = values.reduce((s,r) => s + r.reward, 0);
+            const correct = values.filter(r => r.correct).length;
+            const avgSteps = values.reduce((s,r) => s + r.steps, 0) / values.length;
+
+            document.getElementById("totalReward").textContent = total.toFixed(2);
+            document.getElementById("accuracy").textContent = `${Math.round(correct / values.length * 100)}%`;
+            document.getElementById("accuracySub").textContent = `${correct}/${values.length} correct`;
+            document.getElementById("taskCount").textContent = values.length;
+            document.getElementById("avgSteps").textContent = avgSteps.toFixed(1);
+        }
+
+        async function runEvaluation() {
+            if (isRunning) return;
+            isRunning = true;
+            const btn = document.getElementById("runBtn");
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Running...';
+
+            renderInitialCards();
+
+            // Try live API first, fall back to demo
+            let liveResults = null;
+            try {
+                const resp = await fetch("/api/evaluate");
+                if (resp.ok) liveResults = await resp.json();
+            } catch (_) { /* server not available */ }
+
+            if (liveResults) {
+                // Live results: update all at once with stagger animation
+                const results = {};
+                for (const task of TASKS) {
+                    await new Promise(r => setTimeout(r, 200));
+                    const r = liveResults[task.id];
+                    if (r) {
+                        results[task.id] = r;
+                        updateCard(task.id, r);
+                        updateStats(results);
+                    }
+                }
+            } else {
+                // Demo fallback: staggered simulation
+                const results = {};
+                for (const task of TASKS) {
+                    await new Promise(r => setTimeout(r, 400 + Math.random() * 600));
+                    const result = DEMO_RESULTS[task.id];
+                    results[task.id] = result;
+                    updateCard(task.id, result);
+                    updateStats(results);
+                }
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '▶ Run Again';
+            isRunning = false;
+        }
+
+        // Initialize
+        renderInitialCards();
+    </script>
+</body>
+</html>

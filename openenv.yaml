@@ -1,0 +1,40 @@
+# InvoiceTriageEnv — OpenEnv Environment Manifest
+
+name: invoice_triage_env
+version: 0.1.0
+description: >
+  An accounts payable invoice triage environment for training AI agents
+  to process, validate, and adjudicate supplier invoices. Agents must
+  categorize spend, validate against purchase orders, detect issues
+  (amount mismatches, duplicates, tax errors, suspicious vendors), and
+  make approve / reject / escalate decisions.
+
+author: balaraj
+license: BSD-3-Clause
+
+environment:
+  module: invoice_triage_env.server.invoice_triage_environment
+  class: InvoiceTriageEnvironment
+
+models:
+  action: invoice_triage_env.models.InvoiceAction
+  observation: invoice_triage_env.models.InvoiceObservation
+  state: invoice_triage_env.models.InvoiceState
+
+server:
+  entrypoint: invoice_triage_env/server/app.py
+  dockerfile: Dockerfile
+  port: 8000
+
+tasks:
+  count: 6
+  difficulties:
+    - easy
+    - medium
+    - hard
+  categories:
+    - supplies
+    - marketing
+    - consulting
+    - maintenance
+    - software
