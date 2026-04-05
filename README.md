@@ -461,24 +461,146 @@ print(f"Reward: {obs.reward}, Feedback: {obs.last_action_feedback}")
 
 ## 🧪 Testing
 
+### 1. Unit Tests (Local)
+
 ```bash
-# Run all tests
+# Run all 38 unit tests
 ./run.sh test
 
-# Or directly
+# Or directly with pytest
 pytest tests/ -v --tb=short
 
-# Expected output: 38 passed
+# Expected: 38 passed ✅
 ```
 
-### Test Coverage
-
+**Test Coverage:**
 - Environment reset and state management
 - All 8 action types with correct/incorrect inputs
 - Reward computation and normalization (0.0–1.0)
 - Subtask tracking and completion bonuses
 - Edge cases: invalid actions, duplicate flags, step limits
 - All 6 task scenarios end-to-end
+
+### 2. Live API Testing (curl)
+
+Test against the deployed HF Space or a local server:
+
+```bash
+BASE_URL="https://balarajr-invoice-triage-env.hf.space"
+# For local: BASE_URL="http://localhost:8000"
+
+# Health check
+curl $BASE_URL/health
+# → {"status":"healthy"}
+
+# View environment schema
+curl $BASE_URL/schema | python3 -m json.tool
+
+# View environment metadata
+curl $BASE_URL/metadata | python3 -m json.tool
+```
+
+**Run a full episode:**
+
+```bash
+# Step 1: Reset — start a new episode
+curl -X POST $BASE_URL/reset \
+  -H "Content-Type: application/json" \
+  -d '{"seed": 42}' | python3 -m json.tool
+
+# Step 2: Categorize the invoice
+curl -X POST $BASE_URL/step \
+  -H "Content-Type: application/json" \
+  -d '{"action": {"action_type": "categorize", "category": "supplies"}}'
+
+# Step 3: Set priority
+curl -X POST $BASE_URL/step \
+  -H "Content-Type: application/json" \
+  -d '{"action": {"action_type": "set_priority", "priority": "low"}}'
+
+# Step 4: Approve the invoice
+curl -X POST $BASE_URL/step \
+  -H "Content-Type: application/json" \
+  -d '{"action": {"action_type": "approve", "reason": "Clean invoice, PO matches"}}'
+
+# Check current state at any time
+curl $BASE_URL/state | python3 -m json.tool
+```
+
+**Test a specific task:**
+
+```bash
+# Reset with a specific task
+curl -X POST $BASE_URL/reset \
+  -H "Content-Type: application/json" \
+  -d '{"seed": 42, "task_id": "hard_multi_issue_fraud"}'
+
+# Flag an issue
+curl -X POST $BASE_URL/step \
+  -H "Content-Type: application/json" \
+  -d '{"action": {"action_type": "flag_issue", "issue_type": "duplicate_invoice", "issue_description": "Matches INV from Jan 2026"}}'
+```
+
+### 3. Python Client Testing
+
+```python
+from invoice_triage_env.client import InvoiceTriageClient
+from invoice_triage_env.models import InvoiceAction, ActionType
+
+# Connect to live Space or local server
+client = InvoiceTriageClient("https://balarajr-invoice-triage-env.hf.space")
+
+# Reset
+obs = client.reset(seed=42, task_id="easy_approve_clean")
+print(f"Goal: {obs.goal}")
+print(f"Vendor: {obs.invoice.vendor_name}")
+print(f"Amount: ${obs.invoice.total_amount}")
+
+# Categorize
+obs = client.step(InvoiceAction(action_type=ActionType.CATEGORIZE, category="supplies"))
+print(f"Reward: {obs.reward}, Feedback: {obs.last_action_feedback}")
+
+# Set priority
+obs = client.step(InvoiceAction(action_type=ActionType.SET_PRIORITY, priority="low"))
+print(f"Reward: {obs.reward}")
+
+# Approve
+obs = client.step(InvoiceAction(action_type=ActionType.APPROVE, reason="Clean invoice"))
+print(f"Done: {obs.done}, Final Score: {obs.reward}")
+```
+
+### 4. Web Playground (Browser)
+
+Visit the live Space in your browser:
+
+1. Open [https://huggingface.co/spaces/balarajr/invoice-triage-env](https://huggingface.co/spaces/balarajr/invoice-triage-env)
+2. Click **Reset** to start a new episode — an invoice observation appears
+3. Fill in the action fields (Action Type, Category, Priority, etc.)
+4. Click **Step** to submit the action and see the reward + feedback
+5. Repeat until `done=True`
+
+### 5. OpenEnv Validation
+
+```bash
+# Validate the environment structure matches the OpenEnv spec
+./run.sh validate
+
+# Or directly
+openenv validate
+```
+
+### Endpoint Reference
+
+| Endpoint | Method | Description | Expected Status |
+|----------|--------|-------------|-----------------|
+| `/health` | GET | Health check | `200` → `{"status":"healthy"}` |
+| `/metadata` | GET | Environment name & version | `200` |
+| `/schema` | GET | Action/Observation JSON schemas | `200` |
+| `/reset` | POST | Start a new episode | `200` → observation |
+| `/step` | POST | Take an action | `200` → observation + reward |
+| `/state` | GET | Current episode state | `200` |
+| `/web` | GET | Gradio interactive playground | `200` (HTML) |
+| `/dashboard` | GET | Performance dashboard | `200` (HTML) |
 
 ---
 
