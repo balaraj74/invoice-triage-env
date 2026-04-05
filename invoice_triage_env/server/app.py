@@ -6,43 +6,38 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
 
-from openenv.core.env_server import create_fastapi_app
+from openenv.core.env_server import create_app
 
 from invoice_triage_env.models import InvoiceAction, InvoiceObservation
 from invoice_triage_env.server.invoice_triage_environment import (
     InvoiceTriageEnvironment,
 )
 
-app = create_fastapi_app(
+app = create_app(
     env=InvoiceTriageEnvironment,
     action_cls=InvoiceAction,
     observation_cls=InvoiceObservation,
+    env_name="InvoiceTriageEnv",
 )
 
 # ---------------------------------------------------------------------------
-# Root route — serves dashboard so HF Spaces shows a UI
+# Root route — serves dashboard so HF Spaces shows a UI when
+# ENABLE_WEB_INTERFACE is NOT set (local dev).
+# When ENABLE_WEB_INTERFACE=true, the Gradio app at /web handles the UI
+# and HF's base_path: /web sends root traffic there.
 # ---------------------------------------------------------------------------
 
 DASHBOARD_HTML = Path(__file__).parent / ".." / "dashboard" / "index.html"
 
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    """Serve the dashboard UI at the root path."""
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard():
+    """Serve the custom performance dashboard."""
     if DASHBOARD_HTML.exists():
         return HTMLResponse(content=DASHBOARD_HTML.read_text(), status_code=200)
     return HTMLResponse(
-        content="""
-        <html><body style="background:#0a0e1a;color:#f1f5f9;font-family:sans-serif;
-        display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column">
-        <h1>🧾 InvoiceTriageEnv</h1>
-        <p>OpenEnv environment for AI agent invoice processing</p>
-        <p style="color:#94a3b8;margin-top:20px">
-        API endpoints: <code>/reset</code> <code>/step</code> <code>/state</code> <code>/docs</code>
-        </p>
-        </body></html>
-        """,
-        status_code=200,
+        content="<html><body><h1>Dashboard not found</h1></body></html>",
+        status_code=404,
     )
 
 
