@@ -50,7 +50,8 @@ from invoice_triage_env.tasks import ALL_TASKS
 
 API_BASE_URL = os.environ.get("API_BASE_URL", "https://api.openai.com/v1")
 MODEL_NAME = os.environ.get("MODEL_NAME", "gpt-4o-mini")
-HF_TOKEN = os.environ.get("HF_TOKEN", os.environ.get("OPENAI_API_KEY", ""))
+HF_TOKEN = os.environ.get("HF_TOKEN", "")
+LOCAL_IMAGE_NAME = os.environ.get("LOCAL_IMAGE_NAME", "")
 
 TEMPERATURE = 0.0
 MAX_TOKENS = 1024
@@ -64,7 +65,7 @@ _PRIORITY_MAP = {e.value: e for e in Priority}
 _ISSUE_MAP = {e.value: e for e in IssueType}
 
 # Fallback action if LLM fails
-FALLBACK_ACTION = '{"action_type": "approve", "reason": "Fallback — LLM unavailable"}'
+FALLBACK_ACTION = '{"action_type": "approve", "reason": "Fallback - LLM unavailable"}'
 
 # ---------------------------------------------------------------------------
 # System prompt
@@ -471,6 +472,40 @@ def normalize_score(raw_reward: float, task_id: str) -> float:
 
 
 # ---------------------------------------------------------------------------
+# Structured stdout logging (strict parser format)
+# ---------------------------------------------------------------------------
+
+
+def _safe_one_line(value: Any) -> str:
+    """Convert any value to a compact single-line string for logs."""
+    text = str(value)
+    return " ".join(text.split())
+
+
+def log_start(task: str, env: str, model: str) -> None:
+    print(
+        f"[START] task={_safe_one_line(task)} env={_safe_one_line(env)} model={_safe_one_line(model)}",
+        flush=True,
+    )
+
+
+def log_step(step: int, action: str, reward: float, done: bool, error: Optional[str]) -> None:
+    err = "none" if not error else _safe_one_line(error)
+    print(
+        f"[STEP] step={step} action={json.dumps(_safe_one_line(action))} reward={reward:.6f} done={str(done).lower()} error={err}",
+        flush=True,
+    )
+
+
+def log_end(success: bool, steps: int, score: float, rewards: List[float]) -> None:
+    compact_rewards = [round(float(r), 6) for r in rewards]
+    print(
+        f"[END] success={str(success).lower()} steps={steps} score={score:.6f} rewards={json.dumps(compact_rewards, separators=(',', ':'))}",
+        flush=True,
+    )
+
+
+# ---------------------------------------------------------------------------
 # Main inference loop
 # ---------------------------------------------------------------------------
 
@@ -479,7 +514,7 @@ def main() -> None:
     """Run inference on all 6 tasks and report scores."""
     if not HF_TOKEN:
         print(
-            "ERROR: No API key found. Set HF_TOKEN, OPENAI_API_KEY, or API key env var.",
+            "ERROR: No API key found. Set HF_TOKEN.",
             file=sys.stderr,
         )
         sys.exit(1)
@@ -497,13 +532,14 @@ def main() -> None:
     for task_id in task_ids:
         env = InvoiceTriageEnvironment(task_id=task_id)
         obs = env.reset(seed=42)
+        task_rewards: List[float] = []
 
         messages: List[Dict[str, Any]] = [
             {"role": "system", "content": SYSTEM_PROMPT},
         ]
 
         # ---- Structured output: [START] ----
-        print(f"[START] task={task_id}", flush=True)
+        log_start(task=task_id, env="invoice_triage_env", model=MODEL_NAME)
 
         print(f"{'='*70}", flush=True)
         print(f"  TASK: {task_id}", flush=True)
@@ -575,8 +611,16 @@ def main() -> None:
             label = action.action_type.value.upper()
             print(f"  [{label:<18}] {fb}{(' ERROR: ' + err) if err else ''}", flush=True)
 
+            task_rewards.append(float(obs.reward))
+
             # ---- Structured output: [STEP] ----
-            print(f"[STEP] step={step} reward={obs.reward}", flush=True)
+            log_step(
+                step=step,
+                action=response_text,
+                reward=float(obs.reward),
+                done=bool(obs.done),
+                error=obs.last_action_error,
+            )
 
             if obs.done:
                 break
@@ -589,7 +633,12 @@ def main() -> None:
         print(f"  PROGRESS: {json.dumps(obs.progress, indent=2)}", flush=True)
 
         # ---- Structured output: [END] ----
-        print(f"[END] task={task_id} score={final_score:.4f} steps={step}", flush=True)
+        log_end(
+            success=bool(correct),
+            steps=step,
+            score=float(final_score),
+            rewards=task_rewards,
+        )
 
         results.append({
             "task_id": task_id,
