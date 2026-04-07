@@ -484,10 +484,10 @@ def main() -> None:
         )
         sys.exit(1)
 
-    print(f"API_BASE_URL: {API_BASE_URL}")
-    print(f"MODEL_NAME:   {MODEL_NAME}")
-    print(f"HF_TOKEN:     {'*' * min(8, len(HF_TOKEN))}...{HF_TOKEN[-4:] if len(HF_TOKEN) > 4 else '****'}")
-    print()
+    print(f"API_BASE_URL: {API_BASE_URL}", flush=True)
+    print(f"MODEL_NAME:   {MODEL_NAME}", flush=True)
+    print(f"HF_TOKEN:     {'*' * min(8, len(HF_TOKEN))}...{HF_TOKEN[-4:] if len(HF_TOKEN) > 4 else '****'}", flush=True)
+    print(flush=True)
 
     client = OpenAI(api_key=HF_TOKEN, base_url=API_BASE_URL)
 
@@ -502,10 +502,13 @@ def main() -> None:
             {"role": "system", "content": SYSTEM_PROMPT},
         ]
 
-        print(f"{'='*70}")
-        print(f"  TASK: {task_id}")
-        print(f"  GOAL: {obs.goal}")
-        print(f"{'='*70}")
+        # ---- Structured output: [START] ----
+        print(f"[START] task={task_id}", flush=True)
+
+        print(f"{'='*70}", flush=True)
+        print(f"  TASK: {task_id}", flush=True)
+        print(f"  GOAL: {obs.goal}", flush=True)
+        print(f"{'='*70}", flush=True)
 
         step = 0
         while not obs.done and step < MAX_STEPS:
@@ -529,21 +532,21 @@ def main() -> None:
                     err_str = str(exc)
                     if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
                         wait = 20 * (attempt + 1)
-                        print(f"  [RATE LIMIT] Waiting {wait}s before retry {attempt+2}/4...")
+                        print(f"  [RATE LIMIT] Waiting {wait}s before retry {attempt+2}/4...", flush=True)
                         time.sleep(wait)
                     else:
-                        print(f"  [LLM ERROR] {exc}. Using fallback.")
+                        print(f"  [LLM ERROR] {exc}. Using fallback.", flush=True)
                         response_text = FALLBACK_ACTION
                         break
             else:
-                print(f"  [LLM ERROR] All retries failed. Using fallback.")
+                print(f"  [LLM ERROR] All retries failed. Using fallback.", flush=True)
                 response_text = FALLBACK_ACTION
 
             try:
                 action = parse_model_action(response_text)
                 messages.append({"role": "assistant", "content": response_text})
             except (ValueError, json.JSONDecodeError) as exc:
-                print(f"  [PARSE ERROR] {exc}")
+                print(f"  [PARSE ERROR] {exc}", flush=True)
                 # Retry once
                 messages.append({"role": "assistant", "content": response_text})
                 messages.append({
@@ -562,7 +565,7 @@ def main() -> None:
                     action = parse_model_action(response_text)
                     messages.append({"role": "assistant", "content": response_text})
                 except Exception:
-                    print(f"  [FATAL] Could not parse after retry. Using fallback.")
+                    print(f"  [FATAL] Could not parse after retry. Using fallback.", flush=True)
                     action = parse_model_action(FALLBACK_ACTION)
 
             obs = env.step(action)
@@ -570,7 +573,10 @@ def main() -> None:
             fb = obs.last_action_feedback or ""
             err = obs.last_action_error or ""
             label = action.action_type.value.upper()
-            print(f"  [{label:<18}] {fb}{(' ERROR: ' + err) if err else ''}")
+            print(f"  [{label:<18}] {fb}{(' ERROR: ' + err) if err else ''}", flush=True)
+
+            # ---- Structured output: [STEP] ----
+            print(f"[STEP] step={step} reward={obs.reward}", flush=True)
 
             if obs.done:
                 break
@@ -579,8 +585,11 @@ def main() -> None:
         final_score = obs.reward
         correct = final_score > 0
 
-        print(f"  SCORE: {final_score:.4f}  |  STEPS: {step}")
-        print(f"  PROGRESS: {json.dumps(obs.progress, indent=2)}")
+        print(f"  SCORE: {final_score:.4f}  |  STEPS: {step}", flush=True)
+        print(f"  PROGRESS: {json.dumps(obs.progress, indent=2)}", flush=True)
+
+        # ---- Structured output: [END] ----
+        print(f"[END] task={task_id} score={final_score:.4f} steps={step}", flush=True)
 
         results.append({
             "task_id": task_id,
@@ -590,22 +599,23 @@ def main() -> None:
         })
 
     # ---- Summary ----
-    print(f"\n{'='*70}")
-    print(f"  SUMMARY  (model={MODEL_NAME})")
-    print(f"{'='*70}")
+    print(f"\n{'='*70}", flush=True)
+    print(f"  SUMMARY  (model={MODEL_NAME})", flush=True)
+    print(f"{'='*70}", flush=True)
     for r in results:
         icon = "✓" if r["correct"] else "✗"
         print(
             f"  {icon} {r['task_id']:<35} "
             f"score={r['score']:.4f}  "
-            f"steps={r['steps']}"
+            f"steps={r['steps']}",
+            flush=True,
         )
 
     avg_score = sum(r["score"] for r in results) / len(results) if results else 0
     correct_count = sum(1 for r in results if r["correct"])
 
-    print(f"\n  Avg score: {avg_score:.4f}")
-    print(f"  Tasks correct: {correct_count}/{len(results)}")
+    print(f"\n  Avg score: {avg_score:.4f}", flush=True)
+    print(f"  Tasks correct: {correct_count}/{len(results)}", flush=True)
 
 
 if __name__ == "__main__":
