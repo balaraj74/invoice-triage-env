@@ -478,9 +478,9 @@ class InvoiceTriageEnvironment(
         if self._task is not None:
             max_reward = _compute_task_max_reward(self._task)
             correctness_reward = self._cumulative_reward - (self._step_count * REWARD_STEP_COST)
-            normalized_reward = max(0.0, min(1.0, correctness_reward / max_reward)) if max_reward > 0 else 0.0
+            normalized_reward = max(0.0001, min(0.9999, correctness_reward / max_reward)) if max_reward > 0 else 0.0001
         else:
-            normalized_reward = 0.0
+            normalized_reward = 0.0001
 
         return InvoiceObservation(
             done=self._done,
