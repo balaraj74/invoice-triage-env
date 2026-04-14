@@ -40,6 +40,13 @@ if _OUTPUTS_DIR.exists():
 # Dashboard
 # ---------------------------------------------------------------------------
 
+from fastapi.responses import RedirectResponse
+
+@app.get("/", response_class=RedirectResponse)
+async def root_redirect():
+    """Redirect root to the dashboard."""
+    return RedirectResponse(url="/dashboard", status_code=302)
+
 @app.get("/dashboard", response_class=HTMLResponse)
 async def dashboard():
     """Serve the custom performance dashboard."""
