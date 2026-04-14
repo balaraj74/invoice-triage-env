@@ -1,0 +1,555 @@
+
+=================================================================
+  InvoiceTriageEnv — REINFORCE Training
+  Tasks: ['easy_approve_clean', 'easy_reject_no_po', 'easy_utilities_approve', 'easy_travel_approve', 'easy_missing_approval', 'medium_amount_mismatch', 'medium_duplicate_detection', 'medium_fx_currency_risk', 'medium_equipment_over_budget', 'medium_subscription_overbill', 'medium_split_invoice_abuse', 'hard_multi_issue_fraud', 'hard_suspicious_vendor', 'hard_ghost_vendor', 'hard_tax_fraud_pattern', 'hard_healthcare_complex']
+  Episodes: 5000 | LR: 0.0003 | γ: 0.99
+  Policy params: 366,602
+=================================================================
+
+  Ep    1/5000 | task=easy_approve_clean             | score=0.7692 | avg20=0.7692 | steps= 4 | loss=-0.2513
+  Ep   10/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0770 | steps=15 | loss=-0.3243
+  Ep   20/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.0696 | steps= 6 | loss=-0.5352
+  Ep   30/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0605 | steps=20 | loss=-0.3000
+  Ep   40/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1230 | steps=15 | loss=0.2969
+  Ep   50/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0954 | steps= 3 | loss=-0.9200
+  Ep   60/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0665 | steps=20 | loss=-0.5840
+  Ep   70/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1192 | steps= 4 | loss=-0.0408
+  Ep   80/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0564 | steps=20 | loss=-1.4784
+  Ep   90/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1323 | steps=15 | loss=1.8025
+  Ep  100/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1702 | steps= 4 | loss=-1.2524
+  Ep  110/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0398 | steps=20 | loss=3.6483
+  Ep  120/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0313 | steps=15 | loss=0.2082
+  Ep  130/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.0488 | steps= 3 | loss=0.0880
+  Ep  140/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0176 | steps=20 | loss=-0.0056
+  Ep  150/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0748 | steps= 4 | loss=-0.2328
+  Ep  160/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0766 | steps=20 | loss=-0.7293
+  Ep  170/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1029 | steps=15 | loss=0.2380
+  Ep  180/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1495 | steps= 4 | loss=-0.1102
+  Ep  190/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0485 | steps=20 | loss=-0.6449
+  Ep  200/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1050 | steps=15 | loss=1.7269
+  Ep  210/5000 | task=easy_reject_no_po              | score=0.7857 | avg20=0.1845 | steps= 4 | loss=0.1502
+  Ep  220/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1443 | steps=20 | loss=-0.1611
+  Ep  230/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1207 | steps= 5 | loss=-0.3737
+  Ep  240/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0579 | steps=20 | loss=-0.4337
+  Ep  250/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1424 | steps=15 | loss=-0.3564
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep0250.pt
+  Ep  260/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2597 | steps= 6 | loss=0.5726
+  Ep  270/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1474 | steps=20 | loss=-0.8764
+  Ep  280/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0623 | steps=15 | loss=1.3874
+  Ep  290/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.0902 | steps= 3 | loss=-0.3841
+  Ep  300/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0884 | steps=20 | loss=0.5123
+  Ep  310/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1675 | steps= 4 | loss=-0.8731
+  Ep  320/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1370 | steps=20 | loss=1.3972
+  Ep  330/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0634 | steps=15 | loss=-1.7674
+  Ep  340/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1280 | steps= 4 | loss=0.6956
+  Ep  350/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0665 | steps=20 | loss=-0.3627
+  Ep  360/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1116 | steps=15 | loss=0.7685
+  Ep  370/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1134 | steps= 3 | loss=-1.2923
+  Ep  380/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0959 | steps=20 | loss=1.2207
+  Ep  390/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1733 | steps= 4 | loss=-1.1176
+  Ep  400/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0811 | steps=20 | loss=0.1034
+  Ep  410/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0822 | steps=15 | loss=-0.8898
+  Ep  420/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1538 | steps= 4 | loss=-0.6626
+  Ep  430/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0735 | steps=20 | loss=-0.5544
+  Ep  440/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0727 | steps=15 | loss=-0.2585
+  Ep  450/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1129 | steps= 3 | loss=-0.2285
+  Ep  460/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0727 | steps=20 | loss=0.1134
+  Ep  470/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0808 | steps= 4 | loss=-0.7556
+  Ep  480/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0503 | steps=20 | loss=1.1369
+  Ep  490/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0884 | steps=15 | loss=-0.8450
+  Ep  500/5000 | task=easy_travel_approve            | score=0.4923 | avg20=0.1453 | steps= 6 | loss=-0.2308
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep0500.pt
+  Ep  510/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0588 | steps=20 | loss=-0.4914
+  Ep  520/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0748 | steps=15 | loss=-1.6092
+  Ep  530/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1074 | steps= 5 | loss=-0.6434
+  Ep  540/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0931 | steps=20 | loss=-0.9960
+  Ep  550/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1331 | steps= 4 | loss=-0.3395
+  Ep  560/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0745 | steps=20 | loss=-0.4130
+  Ep  570/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0634 | steps=15 | loss=0.9461
+  Ep  580/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.0964 | steps= 5 | loss=-0.8691
+  Ep  590/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0348 | steps=20 | loss=1.1863
+  Ep  600/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0884 | steps=15 | loss=-1.2330
+  Ep  610/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0902 | steps= 3 | loss=0.0408
+  Ep  620/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0342 | steps=20 | loss=-0.1949
+  Ep  630/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0988 | steps= 5 | loss=0.6416
+  Ep  640/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0683 | steps=20 | loss=-0.1201
+  Ep  650/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0041 | steps=15 | loss=-0.3729
+  Ep  660/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.0041 | steps= 4 | loss=1.8840
+  Ep  670/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0019 | steps=20 | loss=-0.2154
+  Ep  680/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0404 | steps=15 | loss=1.3921
+  Ep  690/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.0964 | steps= 3 | loss=0.1493
+  Ep  700/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1178 | steps=20 | loss=0.9781
+  Ep  710/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0959 | steps= 5 | loss=-0.6622
+  Ep  720/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0360 | steps=20 | loss=0.9966
+  Ep  730/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0730 | steps=15 | loss=-0.3992
+  Ep  740/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1479 | steps= 4 | loss=-0.7177
+  Ep  750/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0768 | steps=20 | loss=-0.7426
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep0750.pt
+  Ep  760/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0884 | steps=15 | loss=-0.5137
+  Ep  770/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1059 | steps= 3 | loss=-0.1304
+  Ep  780/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0176 | steps=20 | loss=-1.0227
+  Ep  790/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0055 | steps= 4 | loss=-0.2370
+  Ep  800/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0073 | steps=20 | loss=-0.2289
+  Ep  810/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0342 | steps=15 | loss=1.0942
+  Ep  820/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1050 | steps= 4 | loss=-0.4857
+  Ep  830/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0727 | steps=20 | loss=0.5175
+  Ep  840/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0342 | steps=15 | loss=-0.8359
+  Ep  850/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0645 | steps= 3 | loss=0.8973
+  Ep  860/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0304 | steps=20 | loss=-1.0950
+  Ep  870/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0422 | steps= 4 | loss=-0.0240
+  Ep  880/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0440 | steps=20 | loss=-0.3708
+  Ep  890/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0342 | steps=15 | loss=-0.2519
+  Ep  900/5000 | task=easy_travel_approve            | score=0.4923 | avg20=0.0588 | steps= 6 | loss=-0.1512
+  Ep  910/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0265 | steps=20 | loss=-0.2429
+  Ep  920/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0470 | steps=15 | loss=0.8366
+  Ep  930/5000 | task=easy_reject_no_po              | score=0.2857 | avg20=0.0631 | steps= 4 | loss=-0.4422
+  Ep  940/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0779 | steps=20 | loss=1.0139
+  Ep  950/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1087 | steps= 4 | loss=-0.5652
+  Ep  960/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0488 | steps=20 | loss=0.2290
+  Ep  970/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0727 | steps=15 | loss=0.0533
+  Ep  980/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1434 | steps= 4 | loss=0.1144
+  Ep  990/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0727 | steps=20 | loss=-0.1947
+  Ep 1000/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0499 | steps=15 | loss=-0.2089
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep1000.pt
+  Ep 1010/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0517 | steps= 3 | loss=-0.2115
+  Ep 1020/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0636 | steps=20 | loss=-0.7217
+  Ep 1030/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1486 | steps= 4 | loss=-0.1886
+  Ep 1040/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0888 | steps=20 | loss=-0.4682
+  Ep 1050/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0019 | steps=15 | loss=0.5790
+  Ep 1060/5000 | task=easy_travel_approve            | score=0.4923 | avg20=0.0588 | steps= 5 | loss=-0.3029
+  Ep 1070/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0588 | steps=20 | loss=0.0031
+  Ep 1080/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0735 | steps=15 | loss=-0.2664
+  Ep 1090/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1122 | steps= 3 | loss=-0.2631
+  Ep 1100/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1328 | steps=20 | loss=-0.5790
+  Ep 1110/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1899 | steps= 4 | loss=-0.6521
+  Ep 1120/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0977 | steps=20 | loss=-0.0028
+  Ep 1130/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0019 | steps=15 | loss=-1.1371
+  Ep 1140/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.0485 | steps= 4 | loss=-0.0768
+  Ep 1150/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0779 | steps=20 | loss=-0.4806
+  Ep 1160/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0456 | steps=15 | loss=-0.0007
+  Ep 1170/5000 | task=easy_reject_no_po              | score=0.0714 | avg20=0.0216 | steps= 4 | loss=1.0426
+  Ep 1180/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0378 | steps=20 | loss=-0.6303
+  Ep 1190/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1207 | steps= 4 | loss=0.1223
+  Ep 1200/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0902 | steps=20 | loss=-0.2058
+  Ep 1210/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0288 | steps=15 | loss=0.6349
+  Ep 1220/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.0829 | steps= 4 | loss=-0.5754
+  Ep 1230/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0854 | steps=20 | loss=0.0550
+  Ep 1240/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0636 | steps=15 | loss=0.2183
+  Ep 1250/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.0517 | steps= 3 | loss=-0.0872
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep1250.pt
+  Ep 1260/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0499 | steps=20 | loss=-0.1953
+  Ep 1270/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1398 | steps= 4 | loss=-0.1611
+  Ep 1280/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1093 | steps=20 | loss=-0.1806
+  Ep 1290/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0727 | steps=15 | loss=-0.2551
+  Ep 1300/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1463 | steps= 4 | loss=0.6211
+  Ep 1310/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0755 | steps=20 | loss=-0.8318
+  Ep 1320/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0870 | steps=15 | loss=0.3252
+  Ep 1330/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1429 | steps= 3 | loss=-0.7457
+  Ep 1340/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1178 | steps=20 | loss=-0.0828
+  Ep 1350/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1560 | steps= 4 | loss=-0.1275
+  Ep 1360/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0962 | steps=20 | loss=-0.2968
+  Ep 1370/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0342 | steps=15 | loss=0.2406
+  Ep 1380/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.0665 | steps= 4 | loss=0.0731
+  Ep 1390/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0342 | steps=20 | loss=0.3566
+  Ep 1400/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0665 | steps=15 | loss=0.3222
+  Ep 1410/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0683 | steps= 3 | loss=0.3361
+  Ep 1420/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0959 | steps=20 | loss=-0.2407
+  Ep 1430/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1576 | steps= 4 | loss=-0.1055
+  Ep 1440/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0654 | steps=20 | loss=-0.4375
+  Ep 1450/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0378 | steps=15 | loss=-0.3767
+  Ep 1460/5000 | task=easy_travel_approve            | score=0.4923 | avg20=0.1247 | steps= 7 | loss=-0.7453
+  Ep 1470/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1182 | steps=20 | loss=-0.3627
+  Ep 1480/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0959 | steps=15 | loss=0.5339
+  Ep 1490/5000 | task=easy_reject_no_po              | score=0.0429 | avg20=0.1074 | steps= 6 | loss=0.9266
+  Ep 1500/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0733 | steps=20 | loss=0.3555
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep1500.pt
+  Ep 1510/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0822 | steps= 4 | loss=-0.6355
+  Ep 1520/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0517 | steps=20 | loss=0.0962
+  Ep 1530/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0414 | steps=15 | loss=-0.1429
+  Ep 1540/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1248 | steps= 4 | loss=-0.3111
+  Ep 1550/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0853 | steps=20 | loss=0.4783
+  Ep 1560/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0822 | steps=15 | loss=-0.3029
+  Ep 1570/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.0998 | steps= 3 | loss=-0.5672
+  Ep 1580/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0822 | steps=20 | loss=-0.4732
+  Ep 1590/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1326 | steps= 4 | loss=-0.2789
+  Ep 1600/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0698 | steps=20 | loss=-0.7268
+  Ep 1610/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0884 | steps=15 | loss=0.1698
+  Ep 1620/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1207 | steps= 4 | loss=-0.1697
+  Ep 1630/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0630 | steps=20 | loss=-0.0915
+  Ep 1640/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1084 | steps=15 | loss=-0.3057
+  Ep 1650/5000 | task=easy_reject_no_po              | score=0.0429 | avg20=0.0836 | steps= 5 | loss=0.4641
+  Ep 1660/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0610 | steps=20 | loss=0.5989
+  Ep 1670/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1439 | steps= 4 | loss=-0.4971
+  Ep 1680/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0888 | steps=20 | loss=-0.1382
+  Ep 1690/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0457 | steps=15 | loss=-0.2278
+  Ep 1700/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1261 | steps= 4 | loss=-0.1288
+  Ep 1710/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1116 | steps=20 | loss=0.2084
+  Ep 1720/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0716 | steps=15 | loss=-0.7484
+  Ep 1730/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0810 | steps= 3 | loss=-0.1351
+  Ep 1740/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0711 | steps=20 | loss=-0.6309
+  Ep 1750/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1192 | steps= 4 | loss=0.0677
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep1750.pt
+  Ep 1760/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0887 | steps=20 | loss=-0.2159
+  Ep 1770/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0928 | steps=15 | loss=-0.0960
+  Ep 1780/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1085 | steps= 4 | loss=0.3856
+  Ep 1790/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0176 | steps=20 | loss=-0.3750
+  Ep 1800/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0734 | steps=15 | loss=-0.0611
+  Ep 1810/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1060 | steps= 4 | loss=-1.3660
+  Ep 1820/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0867 | steps=20 | loss=0.6169
+  Ep 1830/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1101 | steps= 5 | loss=-0.4910
+  Ep 1840/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0579 | steps=20 | loss=-0.0787
+  Ep 1850/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0176 | steps=15 | loss=0.0519
+  Ep 1860/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.0656 | steps= 4 | loss=0.0734
+  Ep 1870/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0499 | steps=20 | loss=-0.1675
+  Ep 1880/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0671 | steps=15 | loss=-0.1108
+  Ep 1890/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1074 | steps= 3 | loss=-1.3715
+  Ep 1900/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1020 | steps=20 | loss=-0.0655
+  Ep 1910/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.2040 | steps= 4 | loss=-0.0183
+  Ep 1920/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1442 | steps=20 | loss=-0.1953
+  Ep 1930/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0499 | steps=15 | loss=-0.4215
+  Ep 1940/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.0979 | steps= 4 | loss=-0.3062
+  Ep 1950/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0499 | steps=20 | loss=-0.3610
+  Ep 1960/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0995 | steps=15 | loss=-0.0408
+  Ep 1970/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1524 | steps= 3 | loss=-0.5996
+  Ep 1980/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0530 | steps=20 | loss=-0.7342
+  Ep 1990/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1085 | steps= 5 | loss=-0.5371
+  Ep 2000/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1104 | steps=20 | loss=-0.5059
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep2000.pt
+  Ep 2010/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1207 | steps=15 | loss=0.0918
+  Ep 2020/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2395 | steps= 4 | loss=0.1143
+  Ep 2030/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.2609
+  Ep 2040/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0499 | steps=15 | loss=0.6219
+  Ep 2050/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1059 | steps= 3 | loss=-0.4264
+  Ep 2060/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.1807
+  Ep 2070/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1024 | steps= 4 | loss=-0.6111
+  Ep 2080/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0396 | steps=20 | loss=-0.1042
+  Ep 2090/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0404 | steps=15 | loss=-0.2527
+  Ep 2100/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1111 | steps= 4 | loss=-0.1592
+  Ep 2110/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1020 | steps=20 | loss=-0.2862
+  Ep 2120/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1085 | steps=15 | loss=0.0884
+  Ep 2130/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0810 | steps= 3 | loss=0.5764
+  Ep 2140/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0588 | steps=20 | loss=-0.5401
+  Ep 2150/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1296 | steps= 5 | loss=-0.2805
+  Ep 2160/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0745 | steps=20 | loss=-0.3228
+  Ep 2170/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1207 | steps=15 | loss=-0.1482
+  Ep 2180/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2072 | steps= 4 | loss=-0.2780
+  Ep 2190/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1178 | steps=20 | loss=-0.1550
+  Ep 2200/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1178 | steps=15 | loss=-0.5347
+  Ep 2210/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1059 | steps= 3 | loss=0.0851
+  Ep 2220/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0822 | steps=20 | loss=-0.2996
+  Ep 2230/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1853 | steps= 4 | loss=0.0048
+  Ep 2240/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1225 | steps=20 | loss=-0.4047
+  Ep 2250/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0727 | steps=15 | loss=-0.3889
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep2250.pt
+  Ep 2260/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1268 | steps= 5 | loss=0.0072
+  Ep 2270/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0561 | steps=20 | loss=-0.4645
+  Ep 2280/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1192 | steps=15 | loss=0.0889
+  Ep 2290/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1367 | steps= 3 | loss=-0.1341
+  Ep 2300/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0822 | steps=20 | loss=-0.4954
+  Ep 2310/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1824 | steps= 4 | loss=0.0959
+  Ep 2320/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1196 | steps=20 | loss=-0.4316
+  Ep 2330/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0745 | steps=15 | loss=0.1811
+  Ep 2340/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1776 | steps= 4 | loss=-0.0219
+  Ep 2350/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1050 | steps=20 | loss=-0.3133
+  Ep 2360/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1050 | steps=15 | loss=0.3085
+  Ep 2370/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1610 | steps= 3 | loss=-0.5753
+  Ep 2380/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0884 | steps=20 | loss=0.0029
+  Ep 2390/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1530 | steps= 4 | loss=-0.6329
+  Ep 2400/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1225 | steps=20 | loss=-0.1360
+  Ep 2410/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0588 | steps=15 | loss=-0.0939
+  Ep 2420/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.0974 | steps= 4 | loss=0.1610
+  Ep 2430/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0405 | steps=20 | loss=-0.0682
+  Ep 2440/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1020 | steps=15 | loss=-0.0357
+  Ep 2450/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1488 | steps= 3 | loss=-0.4816
+  Ep 2460/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0469 | steps=20 | loss=-0.0225
+  Ep 2470/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0884 | steps= 4 | loss=-0.4264
+  Ep 2480/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0902 | steps=20 | loss=0.0062
+  Ep 2490/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1038 | steps=15 | loss=-0.4205
+  Ep 2500/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1902 | steps= 4 | loss=-0.1001
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep2500.pt
+  Ep 2510/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0884 | steps=20 | loss=-0.2801
+  Ep 2520/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0176 | steps=15 | loss=-0.1170
+  Ep 2530/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.0352 | steps= 3 | loss=-0.4684
+  Ep 2540/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0822 | steps=20 | loss=-0.5952
+  Ep 2550/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1762 | steps= 4 | loss=-0.0240
+  Ep 2560/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1134 | steps=20 | loss=-0.2411
+  Ep 2570/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0884 | steps=15 | loss=0.3414
+  Ep 2580/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1749 | steps= 4 | loss=-0.1503
+  Ep 2590/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0884 | steps=20 | loss=-0.4339
+  Ep 2600/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1130 | steps=15 | loss=0.1296
+  Ep 2610/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1533 | steps= 3 | loss=0.4379
+  Ep 2620/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1050 | steps=20 | loss=-0.0463
+  Ep 2630/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1311 | steps= 4 | loss=-0.2708
+  Ep 2640/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0683 | steps=20 | loss=-0.2299
+  Ep 2650/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0822 | steps=15 | loss=-0.0811
+  Ep 2660/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1805 | steps= 4 | loss=-0.1924
+  Ep 2670/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1295 | steps=20 | loss=-0.2349
+  Ep 2680/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1501 | steps=15 | loss=-0.0474
+  Ep 2690/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1674 | steps= 3 | loss=-0.3009
+  Ep 2700/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1115 | steps=20 | loss=-0.2710
+  Ep 2710/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1439 | steps= 4 | loss=-0.1752
+  Ep 2720/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0811 | steps=20 | loss=-0.2587
+  Ep 2730/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1050 | steps=15 | loss=-0.0285
+  Ep 2740/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1838 | steps= 4 | loss=0.0979
+  Ep 2750/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0807 | steps=20 | loss=-0.2813
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep2750.pt
+  Ep 2760/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0884 | steps=15 | loss=0.6191
+  Ep 2770/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1059 | steps= 3 | loss=-0.5314
+  Ep 2780/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0499 | steps=20 | loss=-0.3486
+  Ep 2790/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1145 | steps= 5 | loss=0.4198
+  Ep 2800/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0840 | steps=20 | loss=-0.3498
+  Ep 2810/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1485 | steps=15 | loss=0.0149
+  Ep 2820/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2516 | steps= 4 | loss=-0.0329
+  Ep 2830/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1050 | steps=20 | loss=-0.2940
+  Ep 2840/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0342 | steps=15 | loss=0.2970
+  Ep 2850/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.0902 | steps= 3 | loss=-0.5072
+  Ep 2860/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1501 | steps=20 | loss=-0.1758
+  Ep 2870/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.2070 | steps= 4 | loss=-0.1774
+  Ep 2880/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1148 | steps=20 | loss=-0.3061
+  Ep 2890/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1079 | steps=15 | loss=-0.2591
+  Ep 2900/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2251 | steps= 4 | loss=0.1320
+  Ep 2910/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1192 | steps=20 | loss=-0.1394
+  Ep 2920/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1116 | steps=15 | loss=-0.3233
+  Ep 2930/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1676 | steps= 3 | loss=0.2696
+  Ep 2940/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0884 | steps=20 | loss=-0.4145
+  Ep 2950/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1747 | steps= 4 | loss=-0.3128
+  Ep 2960/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1442 | steps=20 | loss=-0.0923
+  Ep 2970/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1501 | steps=15 | loss=-0.1934
+  Ep 2980/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2304 | steps= 4 | loss=0.0103
+  Ep 2990/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0822 | steps=20 | loss=-0.1835
+  Ep 3000/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0822 | steps=15 | loss=-0.2498
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep3000.pt
+  Ep 3010/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1298 | steps= 3 | loss=-0.1897
+  Ep 3020/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1122 | steps=20 | loss=-0.3584
+  Ep 3030/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1413 | steps= 4 | loss=-0.0926
+  Ep 3040/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0785 | steps=20 | loss=-0.2212
+  Ep 3050/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0854 | steps=15 | loss=-0.1893
+  Ep 3060/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1849 | steps= 4 | loss=-0.2677
+  Ep 3070/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1308 | steps=20 | loss=-0.1866
+  Ep 3080/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1314 | steps=15 | loss=-0.0570
+  Ep 3090/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1580 | steps= 3 | loss=-0.2680
+  Ep 3100/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.0891
+  Ep 3110/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1824 | steps= 4 | loss=-0.2904
+  Ep 3120/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1196 | steps=20 | loss=-0.1933
+  Ep 3130/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0994 | steps=15 | loss=-0.1742
+  Ep 3140/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2182 | steps= 4 | loss=-0.0144
+  Ep 3150/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.1421
+  Ep 3160/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0884 | steps=15 | loss=-0.1759
+  Ep 3170/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1444 | steps= 3 | loss=-0.0170
+  Ep 3180/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0884 | steps=20 | loss=-0.4075
+  Ep 3190/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1500 | steps= 4 | loss=-0.1622
+  Ep 3200/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1195 | steps=20 | loss=-0.2000
+  Ep 3210/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1115 | steps=15 | loss=-0.3286
+  Ep 3220/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1761 | steps= 4 | loss=-0.0061
+  Ep 3230/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0665 | steps=20 | loss=-0.1184
+  Ep 3240/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1102 | steps=15 | loss=-0.1325
+  Ep 3250/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1662 | steps= 3 | loss=0.1652
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep3250.pt
+  Ep 3260/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1130 | steps=20 | loss=-0.2762
+  Ep 3270/5000 | task=medium_amount_mismatch         | score=0.5625 | avg20=0.1350 | steps= 5 | loss=0.2281
+  Ep 3280/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0799 | steps=20 | loss=-0.2140
+  Ep 3290/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0884 | steps=15 | loss=-0.2941
+  Ep 3300/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1915 | steps= 4 | loss=0.1788
+  Ep 3310/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1050 | steps=20 | loss=-0.3237
+  Ep 3320/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0665 | steps=15 | loss=0.1482
+  Ep 3330/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1068 | steps= 3 | loss=1.0389
+  Ep 3340/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0944 | steps=20 | loss=-0.3754
+  Ep 3350/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0702 | steps= 4 | loss=-0.1279
+  Ep 3360/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0180 | steps=20 | loss=-0.3153
+  Ep 3370/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0415 | steps=15 | loss=-0.1360
+  Ep 3380/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1838 | steps= 5 | loss=-0.4486
+  Ep 3390/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1443 | steps=20 | loss=-0.2723
+  Ep 3400/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0822 | steps=15 | loss=-0.2143
+  Ep 3410/5000 | task=easy_reject_no_po              | score=0.7857 | avg20=0.1618 | steps= 4 | loss=0.6898
+  Ep 3420/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1736 | steps=20 | loss=-0.3792
+  Ep 3430/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1739 | steps= 4 | loss=0.0287
+  Ep 3440/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0817 | steps=20 | loss=-0.2202
+  Ep 3450/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1424 | steps=15 | loss=-0.2119
+  Ep 3460/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2611 | steps= 4 | loss=0.3349
+  Ep 3470/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.0050
+  Ep 3480/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0822 | steps=15 | loss=-0.2357
+  Ep 3490/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1382 | steps= 3 | loss=-0.1075
+  Ep 3500/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1053 | steps=20 | loss=-0.0608
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep3500.pt
+  Ep 3510/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1699 | steps= 4 | loss=-0.2643
+  Ep 3520/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1225 | steps=20 | loss=-0.1353
+  Ep 3530/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0748 | steps=15 | loss=-0.1089
+  Ep 3540/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1936 | steps= 4 | loss=-0.2258
+  Ep 3550/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1501 | steps=20 | loss=-0.1288
+  Ep 3560/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0793 | steps=15 | loss=-0.0932
+  Ep 3570/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0887 | steps= 3 | loss=-0.0949
+  Ep 3580/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0711 | steps=20 | loss=-0.2304
+  Ep 3590/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1530 | steps= 5 | loss=-0.1237
+  Ep 3600/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1225 | steps=20 | loss=-0.1594
+  Ep 3610/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1058 | steps=15 | loss=-0.1826
+  Ep 3620/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1600 | steps= 4 | loss=-0.0787
+  Ep 3630/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0561 | steps=20 | loss=-0.2228
+  Ep 3640/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1207 | steps=15 | loss=-0.0808
+  Ep 3650/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1767 | steps= 3 | loss=-0.1137
+  Ep 3660/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.1410
+  Ep 3670/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1530 | steps= 4 | loss=-0.2397
+  Ep 3680/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0902 | steps=20 | loss=-0.2082
+  Ep 3690/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0884 | steps=15 | loss=-0.1298
+  Ep 3700/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1364 | steps= 4 | loss=-0.2764
+  Ep 3710/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0499 | steps=20 | loss=-0.0687
+  Ep 3720/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1050 | steps=15 | loss=-0.2571
+  Ep 3730/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1610 | steps= 3 | loss=-0.1750
+  Ep 3740/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1130 | steps=20 | loss=-0.1519
+  Ep 3750/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1913 | steps= 4 | loss=-0.4014
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep3750.pt
+  Ep 3760/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1362 | steps=20 | loss=-0.0923
+  Ep 3770/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0884 | steps=15 | loss=-0.2662
+  Ep 3780/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1687 | steps= 5 | loss=-0.3793
+  Ep 3790/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1116 | steps=20 | loss=-0.2625
+  Ep 3800/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1093 | steps=15 | loss=-0.3098
+  Ep 3810/5000 | task=easy_reject_no_po              | score=0.0429 | avg20=0.1223 | steps= 5 | loss=0.1149
+  Ep 3820/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0748 | steps=20 | loss=-0.1827
+  Ep 3830/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0884 | steps= 4 | loss=-0.2180
+  Ep 3840/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0579 | steps=20 | loss=-0.1786
+  Ep 3850/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1130 | steps=15 | loss=-0.1033
+  Ep 3860/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1995 | steps= 6 | loss=-0.7795
+  Ep 3870/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1178 | steps=20 | loss=-0.0262
+  Ep 3880/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0793 | steps=15 | loss=-0.1983
+  Ep 3890/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0887 | steps= 3 | loss=0.8735
+  Ep 3900/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1034 | steps=20 | loss=-0.1623
+  Ep 3910/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1853 | steps= 4 | loss=-0.2393
+  Ep 3920/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1225 | steps=20 | loss=-0.1673
+  Ep 3930/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1176 | steps=15 | loss=-0.1212
+  Ep 3940/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2207 | steps= 4 | loss=-0.1975
+  Ep 3950/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1331 | steps=20 | loss=-0.2352
+  Ep 3960/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1488 | steps=15 | loss=-0.2341
+  Ep 3970/5000 | task=easy_reject_no_po              | score=0.2857 | avg20=0.1652 | steps= 4 | loss=-0.8800
+  Ep 3980/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0770 | steps=20 | loss=-0.1225
+  Ep 3990/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1145 | steps= 4 | loss=-0.1591
+  Ep 4000/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0840 | steps=20 | loss=-0.1464
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep4000.pt
+  Ep 4010/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1343 | steps=15 | loss=-0.2557
+  Ep 4020/5000 | task=easy_travel_approve            | score=0.4923 | avg20=0.2333 | steps= 5 | loss=-0.6793
+  Ep 4030/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1008 | steps=20 | loss=-0.1356
+  Ep 4040/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1207 | steps=15 | loss=-0.2403
+  Ep 4050/5000 | task=easy_reject_no_po              | score=0.0714 | avg20=0.1261 | steps= 4 | loss=0.9005
+  Ep 4060/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0701 | steps=20 | loss=-0.1257
+  Ep 4070/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1762 | steps= 4 | loss=-0.3621
+  Ep 4080/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1134 | steps=20 | loss=-0.1122
+  Ep 4090/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1130 | steps=15 | loss=-0.2384
+  Ep 4100/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1902 | steps= 4 | loss=-0.2528
+  Ep 4110/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0792 | steps=20 | loss=-0.1888
+  Ep 4120/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0642 | steps=15 | loss=-0.2217
+  Ep 4130/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0968 | steps= 3 | loss=-0.1008
+  Ep 4140/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0650 | steps=20 | loss=-0.1595
+  Ep 4150/5000 | task=medium_amount_mismatch         | score=0.5625 | avg20=0.1691 | steps= 5 | loss=0.2692
+  Ep 4160/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1386 | steps=20 | loss=-0.1440
+  Ep 4170/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0884 | steps=15 | loss=-0.1804
+  Ep 4180/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1749 | steps= 4 | loss=-0.1448
+  Ep 4190/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1178 | steps=20 | loss=-0.1117
+  Ep 4200/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1501 | steps=15 | loss=-0.2553
+  Ep 4210/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1382 | steps= 3 | loss=-0.3478
+  Ep 4220/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0822 | steps=20 | loss=-0.0580
+  Ep 4230/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1853 | steps= 5 | loss=0.2617
+  Ep 4240/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1225 | steps=20 | loss=-0.1708
+  Ep 4250/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1193 | steps=15 | loss=-0.1966
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep4250.pt
+  Ep 4260/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.2380 | steps= 4 | loss=-0.1108
+  Ep 4270/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.2845
+  Ep 4280/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0884 | steps=15 | loss=0.0190
+  Ep 4290/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.0902 | steps= 4 | loss=-0.1782
+  Ep 4300/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0019 | steps=20 | loss=-0.2521
+  Ep 4310/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.0881 | steps= 4 | loss=-0.0460
+  Ep 4320/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0899 | steps=20 | loss=-0.1834
+  Ep 4330/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0469 | steps=15 | loss=-0.2279
+  Ep 4340/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1641 | steps= 4 | loss=-0.1528
+  Ep 4350/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1192 | steps=20 | loss=-0.1697
+  Ep 4360/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1085 | steps=15 | loss=-0.2257
+  Ep 4370/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1488 | steps= 4 | loss=0.2740
+  Ep 4380/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1050 | steps=20 | loss=-0.1248
+  Ep 4390/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.1913 | steps= 4 | loss=-0.4193
+  Ep 4400/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1285 | steps=20 | loss=-0.1723
+  Ep 4410/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0265 | steps=15 | loss=-0.1801
+  Ep 4420/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1362 | steps= 4 | loss=-0.1991
+  Ep 4430/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1116 | steps=20 | loss=-0.2152
+  Ep 4440/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0665 | steps=15 | loss=-0.2264
+  Ep 4450/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.0840 | steps= 3 | loss=-0.2285
+  Ep 4460/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0822 | steps=20 | loss=-0.0833
+  Ep 4470/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1468 | steps= 6 | loss=-0.0944
+  Ep 4480/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0840 | steps=20 | loss=-0.2272
+  Ep 4490/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0701 | steps=15 | loss=-0.2017
+  Ep 4500/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1889 | steps= 4 | loss=-0.1916
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep4500.pt
+  Ep 4510/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.2633
+  Ep 4520/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1207 | steps=15 | loss=-0.1633
+  Ep 4530/5000 | task=easy_reject_no_po              | score=0.0001 | avg20=0.1225 | steps= 3 | loss=0.2734
+  Ep 4540/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0665 | steps=20 | loss=-0.1864
+  Ep 4550/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1530 | steps= 4 | loss=-0.1275
+  Ep 4560/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0902 | steps=20 | loss=-0.2357
+  Ep 4570/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1050 | steps=15 | loss=-0.1542
+  Ep 4580/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1915 | steps= 4 | loss=-0.1957
+  Ep 4590/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0884 | steps=20 | loss=-0.1619
+  Ep 4600/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0884 | steps=15 | loss=-0.1451
+  Ep 4610/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1444 | steps= 3 | loss=-0.1132
+  Ep 4620/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.1872
+  Ep 4630/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1696 | steps= 4 | loss=-0.1909
+  Ep 4640/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1068 | steps=20 | loss=-0.1748
+  Ep 4650/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1116 | steps=15 | loss=-0.0946
+  Ep 4660/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1981 | steps= 4 | loss=0.0055
+  Ep 4670/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0884 | steps=20 | loss=-0.2039
+  Ep 4680/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0822 | steps=15 | loss=-0.1031
+  Ep 4690/5000 | task=easy_reject_no_po              | score=0.7571 | avg20=0.1527 | steps= 5 | loss=0.2650
+  Ep 4700/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1274 | steps=20 | loss=-0.1656
+  Ep 4710/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1776 | steps= 5 | loss=-0.2990
+  Ep 4720/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1225 | steps=20 | loss=-0.1593
+  Ep 4730/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0730 | steps=15 | loss=-0.1759
+  Ep 4740/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1210 | steps= 5 | loss=-0.4444
+  Ep 4750/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0499 | steps=20 | loss=-0.1433
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep4750.pt
+  Ep 4760/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0869 | steps=15 | loss=-0.1462
+  Ep 4770/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1428 | steps= 3 | loss=-0.2014
+  Ep 4780/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1207 | steps=20 | loss=-0.1843
+  Ep 4790/5000 | task=medium_amount_mismatch         | score=0.5875 | avg20=0.2147 | steps= 4 | loss=-0.3144
+  Ep 4800/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.1519 | steps=20 | loss=-0.1077
+  Ep 4810/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0822 | steps=15 | loss=-0.1493
+  Ep 4820/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1334 | steps= 4 | loss=-0.1730
+  Ep 4830/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0531 | steps=20 | loss=-0.1399
+  Ep 4840/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.0561 | steps=15 | loss=-0.1835
+  Ep 4850/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1121 | steps= 3 | loss=-0.1282
+  Ep 4860/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.0884 | steps=20 | loss=-0.1585
+  Ep 4870/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1207 | steps= 4 | loss=-0.2869
+  Ep 4880/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0902 | steps=20 | loss=-0.1553
+  Ep 4890/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.0884 | steps=15 | loss=-0.1928
+  Ep 4900/5000 | task=easy_travel_approve            | score=0.6462 | avg20=0.1207 | steps= 4 | loss=-0.2923
+  Ep 4910/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.0623 | steps=20 | loss=-0.1580
+  Ep 4920/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1165 | steps=15 | loss=-0.1953
+  Ep 4930/5000 | task=easy_reject_no_po              | score=0.3143 | avg20=0.1428 | steps= 3 | loss=-0.0959
+  Ep 4940/5000 | task=hard_multi_issue_fraud         | score=0.0001 | avg20=0.1162 | steps=20 | loss=-0.1551
+  Ep 4950/5000 | task=medium_amount_mismatch         | score=0.0001 | avg20=0.1287 | steps= 5 | loss=0.1558
+  Ep 4960/5000 | task=hard_healthcare_complex        | score=0.0364 | avg20=0.0689 | steps=20 | loss=-0.2105
+  Ep 4970/5000 | task=medium_subscription_overbill   | score=0.0001 | avg20=0.1071 | steps=15 | loss=-0.1118
+  Ep 4980/5000 | task=easy_travel_approve            | score=0.0001 | avg20=0.1859 | steps= 5 | loss=-0.6214
+  Ep 4990/5000 | task=hard_ghost_vendor              | score=0.0001 | avg20=0.1101 | steps=20 | loss=-0.2223
+  Ep 5000/5000 | task=medium_fx_currency_risk        | score=0.0001 | avg20=0.1162 | steps=15 | loss=-0.0872
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep5000.pt
+
+=================================================================
+  Running final benchmark (3 trials per task, stochastic)...
+    easy_approve_clean                  score=0.7692  steps=4  trials=[0.7692, 0.7692, 0.7692]
+    easy_reject_no_po                   score=0.2096  steps=3  trials=[0.0001, 0.3143, 0.3143]
+    easy_utilities_approve              score=0.4308  steps=10  trials=[0.6462, 0.6462, 0.0001]
+    easy_travel_approve                 score=0.6462  steps=4  trials=[0.6462, 0.6462, 0.6462]
+    easy_missing_approval               score=0.0001  steps=12  trials=[0.0001, 0.0001, 0.0001]
+    medium_amount_mismatch              score=0.0001  steps=5  trials=[0.0001, 0.0001, 0.0001]
+    medium_duplicate_detection          score=0.0001  steps=15  trials=[0.0001, 0.0001, 0.0001]
+    medium_fx_currency_risk             score=0.0001  steps=15  trials=[0.0001, 0.0001, 0.0001]
+    medium_equipment_over_budget        score=0.0001  steps=15  trials=[0.0001, 0.0001, 0.0001]
+    medium_subscription_overbill        score=0.0001  steps=15  trials=[0.0001, 0.0001, 0.0001]
+    medium_split_invoice_abuse          score=0.0001  steps=15  trials=[0.0001, 0.0001, 0.0001]
+    hard_multi_issue_fraud              score=0.0001  steps=20  trials=[0.0001, 0.0001, 0.0001]
+    hard_suspicious_vendor              score=0.0001  steps=20  trials=[0.0001, 0.0001, 0.0001]
+    hard_ghost_vendor                   score=0.0001  steps=20  trials=[0.0001, 0.0001, 0.0001]
+    hard_tax_fraud_pattern              score=0.0001  steps=18  trials=[0.0001, 0.0001, 0.0001]
+    hard_healthcare_complex             score=0.0364  steps=20  trials=[0.0364, 0.0364, 0.0364]
+
+  Average benchmark score: 0.1308
+=================================================================
+
+  ✓ Saved benchmark: outputs/benchmark_results.json
+  ✓ Saved training curve: outputs/training_curves.png
+  Total training time: 113.7s (1.9 min)

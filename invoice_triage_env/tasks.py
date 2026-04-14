@@ -699,3 +699,524 @@ TASKS_BY_DIFFICULTY: Dict[str, List[TaskDefinition]] = {
     "medium": [TASK_MEDIUM_MISMATCH, TASK_MEDIUM_DUPLICATE],
     "hard": [TASK_HARD_MULTI_ISSUE, TASK_HARD_BUDGET_SUSPICIOUS],
 }
+
+
+# =============================================================================
+# EASY TASKS — Additional
+# =============================================================================
+
+TASK_EASY_UTILITIES = TaskDefinition(
+    task_id="easy_utilities_approve",
+    difficulty="easy",
+    goal=(
+        "Process this monthly utilities invoice from CityPower Electric. "
+        "PO is on file. Categorize, set priority, validate, and decide."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-CP-2026-0311",
+        vendor_name="CityPower Electric",
+        vendor_id="VENDOR-0008",
+        invoice_date="2026-03-01",
+        due_date="2026-03-31",
+        currency="USD",
+        subtotal=4200.00,
+        tax_amount=336.00,
+        total_amount=4536.00,
+        po_number="PO-2026-0100",
+        line_items=[
+            LineItem(description="Electricity Building A March 2026", quantity=1, unit_price=2800.00, total=2800.00, po_line_ref="PO-2026-0100-L1"),
+            LineItem(description="Electricity Building B March 2026", quantity=1, unit_price=1400.00, total=1400.00, po_line_ref="PO-2026-0100-L2"),
+        ],
+        notes="Monthly utility billing.",
+    ),
+    purchase_order=PurchaseOrder(
+        po_number="PO-2026-0100",
+        vendor_id="VENDOR-0008",
+        vendor_name="CityPower Electric",
+        total_amount=4500.00,
+        items=[LineItem(description="Monthly electricity all buildings", quantity=1, unit_price=4500.00, total=4500.00)],
+        approved_by="Facilities Manager",
+        budget_code="FAC-UTIL-2026",
+        remaining_budget=50000.00,
+    ),
+    historical_invoices=[],
+    expected_category="utilities",
+    expected_priority="low",
+    expected_issues=[],
+    expected_decision="approve",
+    required_subtasks=["categorized", "priority_set", "po_validated", "decision_made"],
+    max_steps=10,
+)
+
+TASK_EASY_TRAVEL = TaskDefinition(
+    task_id="easy_travel_approve",
+    difficulty="easy",
+    goal=(
+        "Process this travel expense invoice from BusinessTravel Corp "
+        "for the Q1 sales conference. Categorize, set priority, and approve."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-BT-44021",
+        vendor_name="BusinessTravel Corp",
+        vendor_id="VENDOR-0055",
+        invoice_date="2026-03-18",
+        due_date="2026-04-18",
+        currency="USD",
+        subtotal=7800.00,
+        tax_amount=0.00,
+        total_amount=7800.00,
+        po_number="PO-2026-TR-001",
+        line_items=[
+            LineItem(description="Flights x4 staff return", quantity=4, unit_price=850.00, total=3400.00),
+            LineItem(description="Hotel 4 nights x4 staff", quantity=16, unit_price=195.00, total=3120.00),
+            LineItem(description="Ground transport", quantity=1, unit_price=1280.00, total=1280.00),
+        ],
+        notes="Q1 Sales Leadership Conference Chicago.",
+    ),
+    purchase_order=PurchaseOrder(
+        po_number="PO-2026-TR-001",
+        vendor_id="VENDOR-0055",
+        vendor_name="BusinessTravel Corp",
+        total_amount=8000.00,
+        items=[LineItem(description="Q1 sales conference travel", quantity=1, unit_price=8000.00, total=8000.00)],
+        approved_by="VP Sales",
+        budget_code="SALES-TRAVEL-2026",
+        remaining_budget=22000.00,
+    ),
+    historical_invoices=[],
+    expected_category="travel",
+    expected_priority="low",
+    expected_issues=[],
+    expected_decision="approve",
+    required_subtasks=["categorized", "priority_set", "po_validated", "decision_made"],
+    max_steps=10,
+)
+
+TASK_EASY_MISSING_APPROVAL = TaskDefinition(
+    task_id="easy_missing_approval",
+    difficulty="easy",
+    goal=(
+        "Process this invoice from SafeGuard Security Services. "
+        "The purchase order has NOT been approved by anyone. "
+        "Flag the missing approval issue and reject."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-SG-8810",
+        vendor_name="SafeGuard Security Services",
+        vendor_id="VENDOR-0201",
+        invoice_date="2026-03-20",
+        due_date="2026-04-20",
+        currency="USD",
+        subtotal=9500.00,
+        tax_amount=760.00,
+        total_amount=10260.00,
+        po_number="PO-2026-SEC-002",
+        line_items=[
+            LineItem(description="On-site security personnel March", quantity=1, unit_price=9500.00, total=9500.00),
+        ],
+    ),
+    purchase_order=PurchaseOrder(
+        po_number="PO-2026-SEC-002",
+        vendor_id="VENDOR-0201",
+        vendor_name="SafeGuard Security Services",
+        total_amount=9500.00,
+        items=[LineItem(description="Security services", quantity=1, unit_price=9500.00, total=9500.00)],
+        approved_by="",
+        budget_code="FAC-SEC-2026",
+        remaining_budget=30000.00,
+    ),
+    historical_invoices=[],
+    expected_category="maintenance",
+    expected_priority="medium",
+    expected_issues=["missing_approval"],
+    expected_decision="reject",
+    required_subtasks=["categorized", "priority_set", "issue_flagged", "decision_made"],
+    max_steps=12,
+)
+
+
+# =============================================================================
+# MEDIUM TASKS — Additional
+# =============================================================================
+
+TASK_MEDIUM_FOREX = TaskDefinition(
+    task_id="medium_fx_currency_risk",
+    difficulty="medium",
+    goal=(
+        "Process this software invoice from GlobalSoft GmbH Germany. "
+        "Invoice is in EUR but the purchase order is in USD. "
+        "Check for currency mismatch and amount mismatch, then decide."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-GS-DE-2026-0041",
+        vendor_name="GlobalSoft GmbH",
+        vendor_id="VENDOR-0300",
+        invoice_date="2026-03-12",
+        due_date="2026-04-12",
+        currency="EUR",
+        subtotal=22000.00,
+        tax_amount=4180.00,
+        total_amount=26180.00,
+        po_number="PO-2026-IT-200",
+        line_items=[
+            LineItem(description="Enterprise SaaS Q1 license EUR", quantity=1, unit_price=22000.00, total=22000.00),
+        ],
+        notes="Invoice in EUR. Exchange rate not specified.",
+    ),
+    purchase_order=PurchaseOrder(
+        po_number="PO-2026-IT-200",
+        vendor_id="VENDOR-0300",
+        vendor_name="GlobalSoft GmbH",
+        total_amount=24000.00,
+        items=[LineItem(description="Enterprise SaaS Q1 license", quantity=1, unit_price=24000.00, total=24000.00)],
+        approved_by="CTO",
+        budget_code="IT-SW-INTL-2026",
+        remaining_budget=30000.00,
+    ),
+    historical_invoices=[],
+    expected_category="software",
+    expected_priority="high",
+    expected_issues=["amount_mismatch"],
+    expected_decision="escalate",
+    required_subtasks=["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+    max_steps=15,
+)
+
+TASK_MEDIUM_EQUIPMENT = TaskDefinition(
+    task_id="medium_equipment_over_budget",
+    difficulty="medium",
+    goal=(
+        "Process this invoice from TechGear Pro for IT equipment. "
+        "The remaining budget is critically low at 2000. "
+        "Validate amounts, flag the over-budget issue, and decide."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-TGP-2026-122",
+        vendor_name="TechGear Pro",
+        vendor_id="VENDOR-0180",
+        invoice_date="2026-03-14",
+        due_date="2026-04-14",
+        currency="USD",
+        subtotal=38500.00,
+        tax_amount=3080.00,
+        total_amount=41580.00,
+        po_number="PO-2026-IT-150",
+        line_items=[
+            LineItem(description="MacBook Pro 16 x10 units", quantity=10, unit_price=2800.00, total=28000.00),
+            LineItem(description="External monitors x15", quantity=15, unit_price=550.00, total=8250.00),
+            LineItem(description="Docking stations x10", quantity=10, unit_price=225.00, total=2250.00),
+        ],
+    ),
+    purchase_order=PurchaseOrder(
+        po_number="PO-2026-IT-150",
+        vendor_id="VENDOR-0180",
+        vendor_name="TechGear Pro",
+        total_amount=40000.00,
+        items=[LineItem(description="IT equipment refresh", quantity=1, unit_price=40000.00, total=40000.00)],
+        approved_by="IT Director",
+        budget_code="IT-EQUIP-2026",
+        remaining_budget=2000.00,
+    ),
+    historical_invoices=[],
+    expected_category="equipment",
+    expected_priority="high",
+    expected_issues=["over_budget"],
+    expected_decision="escalate",
+    required_subtasks=["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+    max_steps=15,
+)
+
+TASK_MEDIUM_SUBSCRIPTION_OVERBILL = TaskDefinition(
+    task_id="medium_subscription_overbill",
+    difficulty="medium",
+    goal=(
+        "Process this software invoice from CloudStack Inc. "
+        "Historical invoices show a monthly rate of 4500 for 12 months "
+        "but this month they are billing 6800. Investigate the mismatch."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-CS-2026-Q1-03",
+        vendor_name="CloudStack Inc",
+        vendor_id="VENDOR-0088",
+        invoice_date="2026-03-01",
+        due_date="2026-03-31",
+        currency="USD",
+        subtotal=6800.00,
+        tax_amount=544.00,
+        total_amount=7344.00,
+        po_number="PO-2025-SAAS-010",
+        line_items=[
+            LineItem(description="Platform subscription March 2026", quantity=1, unit_price=4500.00, total=4500.00),
+            LineItem(description="Enhanced support package", quantity=1, unit_price=2300.00, total=2300.00),
+        ],
+        notes="Enhanced support added per verbal agreement.",
+    ),
+    purchase_order=PurchaseOrder(
+        po_number="PO-2025-SAAS-010",
+        vendor_id="VENDOR-0088",
+        vendor_name="CloudStack Inc",
+        total_amount=54000.00,
+        items=[LineItem(description="Annual SaaS subscription", quantity=12, unit_price=4500.00, total=54000.00)],
+        approved_by="VP Engineering",
+        budget_code="IT-SAAS-2026",
+        remaining_budget=9000.00,
+    ),
+    historical_invoices=[
+        InvoiceDocument(
+            invoice_id="INV-CS-2026-Q1-01", vendor_name="CloudStack Inc", vendor_id="VENDOR-0088",
+            invoice_date="2026-01-01", due_date="2026-01-31", currency="USD",
+            subtotal=4500.00, tax_amount=360.00, total_amount=4860.00, po_number="PO-2025-SAAS-010",
+            line_items=[LineItem(description="Platform subscription Jan", quantity=1, unit_price=4500.00, total=4500.00)],
+        ),
+        InvoiceDocument(
+            invoice_id="INV-CS-2026-Q1-02", vendor_name="CloudStack Inc", vendor_id="VENDOR-0088",
+            invoice_date="2026-02-01", due_date="2026-02-28", currency="USD",
+            subtotal=4500.00, tax_amount=360.00, total_amount=4860.00, po_number="PO-2025-SAAS-010",
+            line_items=[LineItem(description="Platform subscription Feb", quantity=1, unit_price=4500.00, total=4500.00)],
+        ),
+    ],
+    expected_category="software",
+    expected_priority="high",
+    expected_issues=["amount_mismatch"],
+    expected_decision="escalate",
+    required_subtasks=["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+    max_steps=15,
+)
+
+TASK_MEDIUM_SPLIT_INVOICE = TaskDefinition(
+    task_id="medium_split_invoice_abuse",
+    difficulty="medium",
+    goal=(
+        "Process this invoice from FastFix Contractors. "
+        "Three invoices each for 9800 arrived from this vendor this week "
+        "with no purchase order. This looks like split invoicing to avoid "
+        "the 10000 approval limit. Flag suspicious vendor and escalate."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-FF-2026-0081",
+        vendor_name="FastFix Contractors",
+        vendor_id="VENDOR-0505",
+        invoice_date="2026-03-22",
+        due_date="2026-04-22",
+        currency="USD",
+        subtotal=9800.00,
+        tax_amount=784.00,
+        total_amount=10584.00,
+        po_number=None,
+        line_items=[
+            LineItem(description="Office renovation Phase 1", quantity=1, unit_price=9800.00, total=9800.00),
+        ],
+        notes="Invoice 1 of 3 for office renovation project.",
+    ),
+    purchase_order=None,
+    historical_invoices=[
+        InvoiceDocument(
+            invoice_id="INV-FF-2026-0079", vendor_name="FastFix Contractors", vendor_id="VENDOR-0505",
+            invoice_date="2026-03-19", due_date="2026-04-19", currency="USD",
+            subtotal=9800.00, tax_amount=784.00, total_amount=10584.00, po_number=None,
+            line_items=[LineItem(description="Office renovation prep work", quantity=1, unit_price=9800.00, total=9800.00)],
+        ),
+        InvoiceDocument(
+            invoice_id="INV-FF-2026-0080", vendor_name="FastFix Contractors", vendor_id="VENDOR-0505",
+            invoice_date="2026-03-20", due_date="2026-04-20", currency="USD",
+            subtotal=9800.00, tax_amount=784.00, total_amount=10584.00, po_number=None,
+            line_items=[LineItem(description="Office renovation materials", quantity=1, unit_price=9800.00, total=9800.00)],
+        ),
+    ],
+    expected_category="maintenance",
+    expected_priority="urgent",
+    expected_issues=["missing_po", "suspicious_vendor"],
+    expected_decision="escalate",
+    required_subtasks=["categorized", "priority_set", "issue_flagged", "decision_made"],
+    max_steps=15,
+)
+
+
+# =============================================================================
+# HARD TASKS — Additional
+# =============================================================================
+
+TASK_HARD_GHOST_VENDOR = TaskDefinition(
+    task_id="hard_ghost_vendor",
+    difficulty="hard",
+    goal=(
+        "Process this invoice from Phantom Analytics LLC. "
+        "This vendor has no history with the company. "
+        "The PO has no approver and is over budget. "
+        "Payment note references a personal account. "
+        "Flag all suspicious issues and reject."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-PA-0001",
+        vendor_name="Phantom Analytics LLC",
+        vendor_id="VND-UNKNOWN-001",
+        invoice_date="2026-03-28",
+        due_date="2026-04-04",
+        currency="USD",
+        subtotal=75000.00,
+        tax_amount=6000.00,
+        total_amount=81000.00,
+        po_number="PO-2026-PHNT-01",
+        line_items=[
+            LineItem(description="Strategic consulting services", quantity=1, unit_price=75000.00, total=75000.00),
+        ],
+        notes="Urgent. Bank wire only. Reference JD-PERSONAL-ACCT.",
+    ),
+    purchase_order=PurchaseOrder(
+        po_number="PO-2026-PHNT-01",
+        vendor_id="VND-UNKNOWN-001",
+        vendor_name="Phantom Analytics LLC",
+        total_amount=75000.00,
+        items=[LineItem(description="Consulting", quantity=1, unit_price=75000.00, total=75000.00)],
+        approved_by="",
+        budget_code="CEO-DISC-2026",
+        remaining_budget=1000.00,
+    ),
+    historical_invoices=[],
+    expected_category="consulting",
+    expected_priority="urgent",
+    expected_issues=["suspicious_vendor", "missing_approval", "over_budget", "date_anomaly"],
+    expected_decision="reject",
+    required_subtasks=["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+    max_steps=20,
+)
+
+TASK_HARD_TAX_FRAUD = TaskDefinition(
+    task_id="hard_tax_fraud_pattern",
+    difficulty="hard",
+    goal=(
+        "Process this invoice from MegaSupply Corp. "
+        "The invoice subtotal is 0 but line items total 12000. "
+        "Tax is 1800 calculated on incorrect base. "
+        "Validate all arithmetic, flag tax error and amount mismatch, and reject."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-MS-2026-7721",
+        vendor_name="MegaSupply Corp",
+        vendor_id="VENDOR-0601",
+        invoice_date="2026-03-10",
+        due_date="2026-04-10",
+        currency="USD",
+        subtotal=0.00,
+        tax_amount=1800.00,
+        total_amount=13800.00,
+        po_number="PO-2026-SUP-099",
+        line_items=[
+            LineItem(description="Industrial cleaning supplies", quantity=100, unit_price=60.00, total=6000.00),
+            LineItem(description="Safety equipment", quantity=30, unit_price=200.00, total=6000.00),
+        ],
+        notes="Urgent reorder. Price locked.",
+    ),
+    purchase_order=PurchaseOrder(
+        po_number="PO-2026-SUP-099",
+        vendor_id="VENDOR-0601",
+        vendor_name="MegaSupply Corp",
+        total_amount=12000.00,
+        items=[LineItem(description="Cleaning and safety supplies", quantity=1, unit_price=12000.00, total=12000.00)],
+        approved_by="Operations Director",
+        budget_code="OPS-SUPPLIES-2026",
+        remaining_budget=15000.00,
+    ),
+    historical_invoices=[],
+    expected_category="supplies",
+    expected_priority="urgent",
+    expected_issues=["tax_error", "amount_mismatch"],
+    expected_decision="reject",
+    required_subtasks=["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+    max_steps=18,
+)
+
+TASK_HARD_HEALTHCARE = TaskDefinition(
+    task_id="hard_healthcare_complex",
+    difficulty="hard",
+    goal=(
+        "Process this invoice from MedDevice Partners for medical equipment. "
+        "Multiple line item rates differ from the purchase order. "
+        "One item was already billed in January so it is a duplicate. "
+        "Amount would exceed department budget. Flag all issues and decide."
+    ),
+    invoice=InvoiceDocument(
+        invoice_id="INV-MDP-2026-0441",
+        vendor_name="MedDevice Partners",
+        vendor_id="VENDOR-0350",
+        invoice_date="2026-03-15",
+        due_date="2026-04-15",
+        currency="USD",
+        subtotal=128000.00,
+        tax_amount=0.00,
+        total_amount=128000.00,
+        po_number="PO-2026-MED-010",
+        line_items=[
+            LineItem(description="Ultrasound unit Model X-500", quantity=2, unit_price=45000.00, total=90000.00, po_line_ref="PO-2026-MED-010-L1"),
+            LineItem(description="Patient monitoring systems", quantity=4, unit_price=7500.00, total=30000.00, po_line_ref="PO-2026-MED-010-L2"),
+            LineItem(description="Installation and calibration", quantity=1, unit_price=8000.00, total=8000.00, po_line_ref="PO-2026-MED-010-L3"),
+        ],
+        notes="Healthcare equipment FDA certified.",
+    ),
+    purchase_order=PurchaseOrder(
+        po_number="PO-2026-MED-010",
+        vendor_id="VENDOR-0350",
+        vendor_name="MedDevice Partners",
+        total_amount=110000.00,
+        items=[
+            LineItem(description="Ultrasound unit Model X-500", quantity=2, unit_price=40000.00, total=80000.00),
+            LineItem(description="Patient monitoring systems", quantity=4, unit_price=7000.00, total=28000.00),
+            LineItem(description="Installation and calibration", quantity=1, unit_price=2000.00, total=2000.00),
+        ],
+        approved_by="Chief Medical Officer",
+        budget_code="MED-EQUIP-2026",
+        remaining_budget=15000.00,
+    ),
+    historical_invoices=[
+        InvoiceDocument(
+            invoice_id="INV-MDP-2026-0399", vendor_name="MedDevice Partners", vendor_id="VENDOR-0350",
+            invoice_date="2026-01-20", due_date="2026-02-20", currency="USD",
+            subtotal=8000.00, tax_amount=0.00, total_amount=8000.00, po_number="PO-2026-MED-005",
+            line_items=[LineItem(description="Installation and calibration", quantity=1, unit_price=8000.00, total=8000.00)],
+        ),
+    ],
+    expected_category="equipment",
+    expected_priority="urgent",
+    expected_issues=["amount_mismatch", "over_budget", "duplicate_invoice"],
+    expected_decision="escalate",
+    required_subtasks=["categorized", "priority_set", "po_validated", "issue_flagged", "decision_made"],
+    max_steps=20,
+)
+
+
+# =============================================================================
+# Extended Registry — 16 total tasks (5 easy, 6 medium, 5 hard)
+# =============================================================================
+
+# Replace the previous ALL_TASKS and TASKS_BY_DIFFICULTY with extended versions
+ALL_TASKS = {
+    t.task_id: t
+    for t in [
+        TASK_EASY_APPROVE,
+        TASK_EASY_REJECT,
+        TASK_EASY_UTILITIES,
+        TASK_EASY_TRAVEL,
+        TASK_EASY_MISSING_APPROVAL,
+        TASK_MEDIUM_MISMATCH,
+        TASK_MEDIUM_DUPLICATE,
+        TASK_MEDIUM_FOREX,
+        TASK_MEDIUM_EQUIPMENT,
+        TASK_MEDIUM_SUBSCRIPTION_OVERBILL,
+        TASK_MEDIUM_SPLIT_INVOICE,
+        TASK_HARD_MULTI_ISSUE,
+        TASK_HARD_BUDGET_SUSPICIOUS,
+        TASK_HARD_GHOST_VENDOR,
+        TASK_HARD_TAX_FRAUD,
+        TASK_HARD_HEALTHCARE,
+    ]
+}
+
+TASKS_BY_DIFFICULTY = {
+    "easy": [TASK_EASY_APPROVE, TASK_EASY_REJECT, TASK_EASY_UTILITIES,
+             TASK_EASY_TRAVEL, TASK_EASY_MISSING_APPROVAL],
+    "medium": [TASK_MEDIUM_MISMATCH, TASK_MEDIUM_DUPLICATE, TASK_MEDIUM_FOREX,
+               TASK_MEDIUM_EQUIPMENT, TASK_MEDIUM_SUBSCRIPTION_OVERBILL,
+               TASK_MEDIUM_SPLIT_INVOICE],
+    "hard": [TASK_HARD_MULTI_ISSUE, TASK_HARD_BUDGET_SUSPICIOUS, TASK_HARD_GHOST_VENDOR,
+             TASK_HARD_TAX_FRAUD, TASK_HARD_HEALTHCARE],
+}

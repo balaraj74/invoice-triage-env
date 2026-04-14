@@ -302,12 +302,12 @@ class TestEpisodeFlow:
 
 class TestTaskRegistry:
     def test_all_tasks_count(self):
-        assert len(ALL_TASKS) == 6
+        assert len(ALL_TASKS) == 16
 
     def test_difficulty_distribution(self):
-        assert len(TASKS_BY_DIFFICULTY["easy"]) == 2
-        assert len(TASKS_BY_DIFFICULTY["medium"]) == 2
-        assert len(TASKS_BY_DIFFICULTY["hard"]) == 2
+        assert len(TASKS_BY_DIFFICULTY["easy"]) == 5
+        assert len(TASKS_BY_DIFFICULTY["medium"]) == 6
+        assert len(TASKS_BY_DIFFICULTY["hard"]) == 5
 
     @pytest.mark.parametrize("task_id,expected_decision", [
         ("easy_approve_clean", "approve"),

@@ -21,20 +21,20 @@ Invoice processing costs enterprises **$15–$40 per invoice** manually. Agents 
 # Install
 pip install openenv-core
 
-# Run the demo agent on all 6 tasks
+# Run the demo agent on all 16 tasks
 PYTHONPATH=. python -m invoice_triage_env.examples.run_agent
 ```
 
 ### With HTTP Server
 
 ```bash
-# Start the server
-PYTHONPATH=. uvicorn invoice_triage_env.server.app:app --host 0.0.0.0 --port 8000
+# Start the server (binds to 7860 by default for Hugging Face Spaces compatibility)
+PYTHONPATH=. uvicorn invoice_triage_env.server.app:app --host 0.0.0.0 --port 7860
 
 # Use the typed client
 python -c "
 from invoice_triage_env.client import InvoiceTriageClient
-client = InvoiceTriageClient('http://localhost:8000')
+client = InvoiceTriageClient('http://localhost:7860')
 obs = client.reset()
 print(obs.goal)
 "
@@ -45,19 +45,27 @@ print(obs.goal)
 ```bash
 cd invoice_triage_env
 docker build -t invoice-triage-env -f server/Dockerfile .
-docker run -p 8000:8000 invoice-triage-env
+docker run -p 7860:7860 invoice-triage-env
 ```
 
+## Dashboard & Evaluation
+
+This environment includes a full evaluation suite and an interactive dashboard. 
+- Run `python training/ollama_agent.py` to evaluate your agent. It writes results to `outputs/benchmark_results.json`.
+- Open `dashboard/index.html` in your browser to view a live breakdown of your agent's performance across 16 tasks.
+
 ## Tasks
+
+There are **16 total tasks** ranging by difficulty. Examples include:
 
 | ID | Difficulty | Issues | Expected |
 |----|-----------|--------|----------|
 | `easy_approve_clean` | Easy | None | Approve |
-| `easy_reject_no_po` | Easy | Missing PO | Reject |
-| `medium_amount_mismatch` | Medium | Rate overcharge | Escalate |
+| `easy_utilities_approve` | Easy | None | Approve |
+| `medium_subscription_overbill` | Medium | Subscription Overbilling | Escalate |
 | `medium_duplicate_detection` | Medium | Duplicate invoice | Reject |
 | `hard_multi_issue_fraud` | Hard | 6 concurrent issues | Reject |
-| `hard_suspicious_vendor` | Hard | Budget + escalating costs | Escalate |
+| `hard_tax_fraud_pattern` | Hard | Tax evasion/fraud | Reject |
 
 ## Action Space
 

@@ -1,0 +1,156 @@
+{
+  "history": {},
+  "benchmark": {
+    "easy_approve_clean": {
+      "score": 0.9999,
+      "greedy_score": 0.9999,
+      "steps": 0,
+      "trials": [
+        0.9999
+      ]
+    },
+    "easy_missing_approval": {
+      "score": 0.8857,
+      "greedy_score": 0.8857,
+      "steps": 0,
+      "trials": [
+        0.8857
+      ]
+    },
+    "easy_reject_no_po": {
+      "score": 0.9999,
+      "greedy_score": 0.9999,
+      "steps": 0,
+      "trials": [
+        0.9999
+      ]
+    },
+    "easy_travel_approve": {
+      "score": 0.8769,
+      "greedy_score": 0.8769,
+      "steps": 0,
+      "trials": [
+        0.8769
+      ]
+    },
+    "easy_utilities_approve": {
+      "score": 0.8769,
+      "greedy_score": 0.8769,
+      "steps": 0,
+      "trials": [
+        0.8769
+      ]
+    },
+    "hard_ghost_vendor": {
+      "score": 0.736,
+      "greedy_score": 0.736,
+      "steps": 0,
+      "trials": [
+        0.736
+      ]
+    },
+    "hard_healthcare_complex": {
+      "score": 0.9999,
+      "greedy_score": 0.9999,
+      "steps": 0,
+      "trials": [
+        0.9999
+      ]
+    },
+    "hard_multi_issue_fraud": {
+      "score": 0.9806,
+      "greedy_score": 0.9806,
+      "steps": 0,
+      "trials": [
+        0.9806
+      ]
+    },
+    "hard_suspicious_vendor": {
+      "score": 0.6818,
+      "greedy_score": 0.6818,
+      "steps": 0,
+      "trials": [
+        0.6818
+      ]
+    },
+    "hard_tax_fraud_pattern": {
+      "score": 0.8421,
+      "greedy_score": 0.8421,
+      "steps": 0,
+      "trials": [
+        0.8421
+      ]
+    },
+    "medium_amount_mismatch": {
+      "score": 0.9999,
+      "greedy_score": 0.9999,
+      "steps": 0,
+      "trials": [
+        0.9999
+      ]
+    },
+    "medium_duplicate_detection": {
+      "score": 0.9,
+      "greedy_score": 0.9,
+      "steps": 0,
+      "trials": [
+        0.9
+      ]
+    },
+    "medium_equipment_over_budget": {
+      "score": 0.9999,
+      "greedy_score": 0.9999,
+      "steps": 0,
+      "trials": [
+        0.9999
+      ]
+    },
+    "medium_fx_currency_risk": {
+      "score": 0.8125,
+      "greedy_score": 0.8125,
+      "steps": 0,
+      "trials": [
+        0.8125
+      ]
+    },
+    "medium_split_invoice_abuse": {
+      "score": 0.9999,
+      "greedy_score": 0.9999,
+      "steps": 0,
+      "trials": [
+        0.9999
+      ]
+    },
+    "medium_subscription_overbill": {
+      "score": 0.9999,
+      "greedy_score": 0.9999,
+      "steps": 0,
+      "trials": [
+        0.9999
+      ]
+    }
+  },
+  "avg_benchmark_score": 0.9119875,
+  "avg_greedy_score": 0.9119875,
+  "n_passing_greedy": 16,
+  "n_passing_avg": 16,
+  "n_episodes": "ollama:gemma4:e4b",
+  "tasks": [
+    "easy_approve_clean",
+    "easy_reject_no_po",
+    "easy_utilities_approve",
+    "easy_travel_approve",
+    "easy_missing_approval",
+    "medium_amount_mismatch",
+    "medium_duplicate_detection",
+    "medium_fx_currency_risk",
+    "medium_equipment_over_budget",
+    "medium_subscription_overbill",
+    "medium_split_invoice_abuse",
+    "hard_multi_issue_fraud",
+    "hard_suspicious_vendor",
+    "hard_ghost_vendor",
+    "hard_tax_fraud_pattern",
+    "hard_healthcare_complex"
+  ]
+}

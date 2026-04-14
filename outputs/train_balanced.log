@@ -1,0 +1,96 @@
+/home/balaraj/meta/invoice_triage_env/training/train_reinforce.py:446: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(resume_checkpoint, map_location=device)
+  ✓ Resumed from checkpoint: outputs/checkpoints/policy_ep15000.pt (ep 15000)
+
+=================================================================
+  InvoiceTriageEnv — REINFORCE Training (batch advantage normalization)
+  Device: cuda | Tasks: 16 | Episodes: 6000
+  LR: 0.0002 | γ: 0.99 | Batch: 16 | Entropy: 0.05
+  Policy params: 390,410
+=================================================================
+
+  Ep    16/6000 | task=easy_utilities_approve              | score=0.0001 | avg20=0.5071 | loss=-1.3668
+  Ep   128/6000 | task=easy_missing_approval               | score=0.0001 | avg20=0.4763 | loss=-0.8900
+  Ep   240/6000 | task=easy_travel_approve                 | score=0.6462 | avg20=0.5646 | loss=-0.9733
+  Ep   352/6000 | task=easy_approve_clean                  | score=0.7692 | avg20=0.5584 | loss=-1.3217
+  Ep   464/6000 | task=medium_equipment_over_budget        | score=0.8125 | avg20=0.5456 | loss=-1.7118
+  Ep   576/6000 | task=easy_travel_approve                 | score=0.6462 | avg20=0.6534 | loss=-0.7140
+  Ep   688/6000 | task=easy_approve_clean                  | score=0.7692 | avg20=0.5635 | loss=-1.4381
+  Ep   800/6000 | task=easy_missing_approval               | score=0.0001 | avg20=0.5455 | loss=-1.6574
+  Ep   912/6000 | task=medium_fx_currency_risk             | score=0.8375 | avg20=0.6057 | loss=-0.6093
+  Ep  1024/6000 | task=easy_missing_approval               | score=0.4429 | avg20=0.5306 | loss=-1.0339
+  Ep  1136/6000 | task=easy_reject_no_po                   | score=0.7857 | avg20=0.6106 | loss=-0.6434
+  Ep  1248/6000 | task=medium_equipment_over_budget        | score=0.8000 | avg20=0.4967 | loss=-1.2657
+  Ep  1360/6000 | task=easy_reject_no_po                   | score=0.0714 | avg20=0.4830 | loss=-1.0048
+  Ep  1472/6000 | task=easy_approve_clean                  | score=0.7692 | avg20=0.6112 | loss=-1.3019
+  Ep  1584/6000 | task=medium_subscription_overbill        | score=0.8375 | avg20=0.4964 | loss=-1.3082
+  Ep  1696/6000 | task=easy_travel_approve                 | score=0.6462 | avg20=0.5871 | loss=-1.9433
+  Ep  1808/6000 | task=easy_travel_approve                 | score=0.6462 | avg20=0.6140 | loss=-1.7017
+  Ep  1920/6000 | task=medium_equipment_over_budget        | score=0.1750 | avg20=0.5794 | loss=-1.9624
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep02000.pt
+  Ep  2032/6000 | task=easy_missing_approval               | score=0.0001 | avg20=0.4570 | loss=-2.8849
+  Ep  2144/6000 | task=medium_equipment_over_budget        | score=0.8000 | avg20=0.5110 | loss=-1.0795
+  Ep  2256/6000 | task=easy_missing_approval               | score=0.4429 | avg20=0.6290 | loss=-0.8877
+  Ep  2368/6000 | task=medium_amount_mismatch              | score=0.5875 | avg20=0.5771 | loss=-1.7789
+  Ep  2480/6000 | task=easy_travel_approve                 | score=0.6462 | avg20=0.5438 | loss=-1.2296
+  Ep  2592/6000 | task=medium_split_invoice_abuse          | score=0.4588 | avg20=0.4923 | loss=-1.0991
+  Ep  2704/6000 | task=medium_amount_mismatch              | score=0.5875 | avg20=0.5065 | loss=-2.7065
+  Ep  2816/6000 | task=hard_multi_issue_fraud              | score=0.0001 | avg20=0.4333 | loss=-2.7688
+  Ep  2928/6000 | task=medium_equipment_over_budget        | score=0.8000 | avg20=0.5349 | loss=-2.3993
+  Ep  3040/6000 | task=medium_equipment_over_budget        | score=0.8000 | avg20=0.5590 | loss=-1.1979
+  Ep  3152/6000 | task=medium_subscription_overbill        | score=0.5875 | avg20=0.5016 | loss=-2.1195
+  Ep  3264/6000 | task=hard_healthcare_complex             | score=0.6818 | avg20=0.6079 | loss=-2.7430
+  Ep  3376/6000 | task=hard_suspicious_vendor              | score=0.2636 | avg20=0.4854 | loss=-2.6425
+  Ep  3488/6000 | task=hard_healthcare_complex             | score=0.7000 | avg20=0.5164 | loss=-0.7407
+  Ep  3600/6000 | task=hard_suspicious_vendor              | score=0.6909 | avg20=0.6115 | loss=0.0472
+  Ep  3712/6000 | task=easy_approve_clean                  | score=0.7692 | avg20=0.6171 | loss=0.0480
+  Ep  3824/6000 | task=medium_amount_mismatch              | score=0.0001 | avg20=0.4519 | loss=-2.7549
+  Ep  3936/6000 | task=easy_reject_no_po                   | score=0.7857 | avg20=0.4385 | loss=-1.4853
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep04000.pt
+  Ep  4048/6000 | task=hard_ghost_vendor                   | score=0.2080 | avg20=0.5915 | loss=-1.4760
+  Ep  4160/6000 | task=hard_multi_issue_fraud              | score=0.2516 | avg20=0.5731 | loss=-2.6299
+  Ep  4272/6000 | task=medium_split_invoice_abuse          | score=0.6000 | avg20=0.5200 | loss=-1.9908
+  Ep  4384/6000 | task=medium_amount_mismatch              | score=0.0001 | avg20=0.5724 | loss=-3.1852
+  Ep  4496/6000 | task=hard_healthcare_complex             | score=0.4909 | avg20=0.5477 | loss=-1.9447
+  Ep  4608/6000 | task=medium_subscription_overbill        | score=0.8125 | avg20=0.4659 | loss=-2.4787
+  Ep  4720/6000 | task=hard_tax_fraud_pattern              | score=0.6421 | avg20=0.5250 | loss=-0.7806
+  Ep  4832/6000 | task=hard_healthcare_complex             | score=0.6909 | avg20=0.4158 | loss=-3.0885
+  Ep  4944/6000 | task=hard_ghost_vendor                   | score=0.2960 | avg20=0.3811 | loss=-2.8833
+  Ep  5056/6000 | task=hard_multi_issue_fraud              | score=0.0001 | avg20=0.4068 | loss=-1.8653
+  Ep  5168/6000 | task=medium_split_invoice_abuse          | score=0.4588 | avg20=0.5245 | loss=-1.6619
+  Ep  5280/6000 | task=hard_healthcare_complex             | score=0.1273 | avg20=0.5503 | loss=-3.1669
+  Ep  5392/6000 | task=hard_ghost_vendor                   | score=0.3920 | avg20=0.5498 | loss=-0.6434
+  Ep  5504/6000 | task=medium_amount_mismatch              | score=0.5875 | avg20=0.5443 | loss=-3.8742
+  Ep  5616/6000 | task=hard_ghost_vendor                   | score=0.3920 | avg20=0.5366 | loss=-3.3030
+  Ep  5728/6000 | task=hard_tax_fraud_pattern              | score=0.0632 | avg20=0.4972 | loss=-1.3003
+  Ep  5840/6000 | task=easy_reject_no_po                   | score=0.7857 | avg20=0.4726 | loss=-4.0964
+  Ep  5952/6000 | task=hard_ghost_vendor                   | score=0.2880 | avg20=0.5315 | loss=-2.8606
+  Ep  6000/6000 | task=hard_multi_issue_fraud              | score=0.0001 | avg20=0.4599 | loss=-3.1102
+  ✓ Saved checkpoint: outputs/checkpoints/policy_ep06000.pt
+
+=================================================================
+  Running final benchmark (1 greedy + 4 stochastic per task)...
+    ❌ easy_approve_clean                     greedy=0.0001  avg=0.4616
+    ❌ easy_missing_approval                  greedy=0.4000  avg=0.3343
+    ✅ easy_reject_no_po                      greedy=0.7857  avg=0.7857
+    ❌ easy_travel_approve                    greedy=0.0001  avg=0.3878
+    ❌ easy_utilities_approve                 greedy=0.0001  avg=0.3878
+    ❌ hard_ghost_vendor                      greedy=0.2080  avg=0.2000
+    ✅ hard_healthcare_complex                greedy=0.6636  avg=0.4818
+    ❌ hard_multi_issue_fraud                 greedy=0.2323  avg=0.1368
+    ✅ hard_suspicious_vendor                 greedy=0.6818  avg=0.7036
+    ✅ hard_tax_fraud_pattern                 greedy=0.5895  avg=0.5979
+    ✅ medium_amount_mismatch                 greedy=0.5875  avg=0.5875
+    ✅ medium_duplicate_detection             greedy=0.7125  avg=0.7125
+    ✅ medium_equipment_over_budget           greedy=0.8000  avg=0.5475
+    ✅ medium_fx_currency_risk                greedy=0.8000  avg=0.6875
+    ❌ medium_split_invoice_abuse             greedy=0.4706  avg=0.2753
+    ✅ medium_subscription_overbill           greedy=0.8250  avg=0.6750
+
+  Greedy avg:  0.4848  |  Stochastic avg: 0.4977
+  Passing (greedy ≥0.5): 9/16   Passing (avg ≥0.5): 8/16
+=================================================================
+
+  ✓ Saved benchmark: outputs/benchmark_results.json
+  ✓ Saved training curve: outputs/training_curves.png
+  Total training time: 57.2s (1.0 min)
