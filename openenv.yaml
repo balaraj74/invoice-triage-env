@@ -24,10 +24,10 @@ models:
 server:
   entrypoint: invoice_triage_env/server/app.py
   dockerfile: Dockerfile
-  port: 8000
+  port: 7860
 
 tasks:
-  count: 6
+  count: 16
   difficulties:
     - easy
     - medium
